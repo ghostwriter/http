@@ -1,11 +1,15 @@
 {
-    "name": "ghostwriter/wip",
-    "description": "Here be dragons",
+    "name": "ghostwriter/http",
+    "description": "HTTP Client and Server abstraction for PHP inspired by PSR-7, PSR-15, PSR-17 and PSR-18 specification.",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
-        "wip"
+        "http",
+        "psr-7",
+        "psr-15",
+        "psr-17",
+        "psr-18"
     ],
     "authors": [
         {
@@ -15,13 +19,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/ghostwriter/wip",
+    "homepage": "https://github.com/ghostwriter/http",
     "support": {
-        "issues": "https://github.com/ghostwriter/wip/issues",
-        "forum": "https://github.com/ghostwriter/wip/discussions",
-        "source": "https://github.com/ghostwriter/wip",
-        "docs": "https://github.com/ghostwriter/wip",
-        "rss": "https://github.com/ghostwriter/wip/releases.atom"
+        "issues": "https://github.com/ghostwriter/http/issues",
+        "forum": "https://github.com/ghostwriter/http/discussions",
+        "source": "https://github.com/ghostwriter/http",
+        "docs": "https://github.com/ghostwriter/http",
+        "rss": "https://github.com/ghostwriter/http/releases.atom"
     },
     "funding": [
         {
@@ -30,35 +34,28 @@
         }
     ],
     "require": {
-        "php": ">=8.0, <8.2",
-        "ghostwriter/container": "^0.3",
-        "ghostwriter/event-dispatcher": "^0.1"
+        "php": ">=8.0,<8.2",
+        "ext-curl": ">=7.38"
     },
     "require-dev": {
+        "infection/infection": "^0.26.14",
         "phpbench/phpbench": "^1.2.5",
-        "phpunit/phpunit": "^9.5.20",
-        "psalm/plugin-phpunit": "^0.16.1",
-        "rector/rector": "^0.12.23",
-        "roave/infection-static-analysis-plugin": "^1.18.0",
-        "roave/security-advisories": "dev-latest",
-        "symplify/easy-coding-standard": "^10.2.6",
-        "vimeo/psalm": "^4.23.0"
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "rector/rector": "^0.14.0",
+        "symplify/easy-coding-standard": "^11.1",
+        "vimeo/psalm": "^4.26"
     },
-    "replace": {},
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\wip\\": "src/"
-        },
-        "files": [
-            "src/constants.php",
-            "src/functions.php"
-        ]
+            "Ghostwriter\\Http\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\wip\\Tests\\": "tests/"
+            "Ghostwriter\\Http\\Tests\\": "tests/"
         }
     },
     "config": {

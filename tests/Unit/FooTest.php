@@ -2,16 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\wip\Tests\Unit;
+namespace Ghostwriter\Http\Tests\Unit;
 
-use Ghostwriter\wip\Foo;
+use Ghostwriter\Http\Foo;
 
-/** @coversDefaultClass \Ghostwriter\wip\Foo */
-class FooTest extends AbstractTestCase
+/**
+ * @coversDefaultClass \Ghostwriter\Http\Foo
+ *
+ * @internal
+ *
+ * @small
+ */
+final class FooTest extends AbstractTestCase
 {
     /** @covers ::test */
     public function test(): void
     {
-        $this->assertTrue((new Foo())->test());
+        self::assertTrue((new Foo())->test());
     }
 }
