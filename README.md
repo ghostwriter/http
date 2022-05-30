@@ -1,19 +1,19 @@
-# wip
+# HTTP
 
-[![Continuous Integration](https://github.com/ghostwriter/wip/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/ghostwriter/wip/actions/workflows/continuous-integration.yml)
-[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/wip?color=8892bf)](https://www.php.net/supported-versions)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/wip/coverage.svg)](https://shepherd.dev/github/ghostwriter/wip)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/wip)](https://packagist.org/packages/ghostwriter/wip)
-[![Downloads](https://badgen.net/packagist/dt/ghostwriter/wip?color=blue)](https://packagist.org/packages/ghostwriter/wip)
+[![Continuous Integration](https://github.com/ghostwriter/http/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/continuous-integration.yml)
+[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/http?color=8892bf)](https://www.php.net/supported-versions)
+[![Type Coverage](https://shepherd.dev/github/ghostwriter/http/coverage.svg)](https://shepherd.dev/github/ghostwriter/http)
+[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/http)](https://packagist.org/packages/ghostwriter/http)
+[![Downloads](https://badgen.net/packagist/dt/ghostwriter/http?color=blue)](https://packagist.org/packages/ghostwriter/http)
 
-work in progress
+HTTP client abstraction for PHP - Provides a PSR-7, PSR-15, PSR-17 and PSR-18 implementation.
 
 ## Installation
 
 You can install the package via composer:
 
 ``` bash
-composer require ghostwriter/wip
+composer require ghostwriter/http
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ Maintaining open source software is a thankless, time-consuming job.
 
 Sponsorships are one of the best ways to contribute to the long-term sustainability of an open-source licensed project.
 
-Please consider giving back, to fund the continued development of `ghostwriter/wip`, by sponsoring me here on GitHub.
+Please consider giving back, to fund the continued development of `ghostwriter/http`, by sponsoring me here on GitHub.
 
 [[Become a GitHub Sponsor](https://github.com/sponsors/ghostwriter)]
 
@@ -55,7 +55,7 @@ Please consider helping your company become a GitHub Sponsor, to support the ope
 ## Credits
 
 - [Nathanael Esayeas](https://github.com/ghostwriter)
-- [All Contributors](https://github.com/ghostwriter/wip/contributors)
+- [All Contributors](https://github.com/ghostwriter/http/contributors)
 
 ## License
 
