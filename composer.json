@@ -1,11 +1,15 @@
 {
-    "name": "ghostwriter/wip",
-    "description": "Here be dragons",
+    "name": "ghostwriter/http",
+    "description": "HTTP client abstraction for PHP - Provides a PSR-7, PSR-15, PSR-17 and PSR-18 implementation.",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
-        "wip"
+        "http",
+        "psr-7",
+        "psr-15",
+        "psr-17",
+        "psr-18"
     ],
     "authors": [
         {
@@ -15,13 +19,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/ghostwriter/wip",
+    "homepage": "https://github.com/ghostwriter/http",
     "support": {
-        "issues": "https://github.com/ghostwriter/wip/issues",
-        "forum": "https://github.com/ghostwriter/wip/discussions",
-        "source": "https://github.com/ghostwriter/wip",
-        "docs": "https://github.com/ghostwriter/wip",
-        "rss": "https://github.com/ghostwriter/wip/releases.atom"
+        "issues": "https://github.com/ghostwriter/http/issues",
+        "forum": "https://github.com/ghostwriter/http/discussions",
+        "source": "https://github.com/ghostwriter/http",
+        "docs": "https://github.com/ghostwriter/http",
+        "rss": "https://github.com/ghostwriter/http/releases.atom"
     },
     "funding": [
         {
@@ -30,9 +34,13 @@
         }
     ],
     "require": {
-        "php": ">=8.0, <8.2",
-        "ghostwriter/container": "^0.3",
-        "ghostwriter/event-dispatcher": "^0.1"
+        "php": ">=8.0,<8.2",
+        "ext-curl": "*",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     },
     "require-dev": {
         "phpbench/phpbench": "^1.2.5",
@@ -44,21 +52,23 @@
         "symplify/easy-coding-standard": "^10.2.6",
         "vimeo/psalm": "^4.23.0"
     },
-    "replace": {},
+    "provide": {
+        "psr/http-client-implementation": "1.0",
+        "psr/http-factory-implementation": "1.0",
+        "psr/http-message-implementation": "1.0",
+        "psr/http-server-handler-implementation": "1.0",
+        "psr/http-server-middleware-implementation": "1.0"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\wip\\": "src/"
-        },
-        "files": [
-            "src/constants.php",
-            "src/functions.php"
-        ]
+            "Ghostwriter\\Http\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\wip\\Tests\\": "tests/"
+            "Ghostwriter\\Http\\Tests\\": "tests/"
         }
     },
     "config": {
