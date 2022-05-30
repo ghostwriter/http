@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\wip;
+namespace Ghostwriter\Http;
 
-class Foo
+final class Foo
 {
     public function test(): bool
     {
