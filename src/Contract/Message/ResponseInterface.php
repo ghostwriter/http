@@ -66,5 +66,5 @@ interface ResponseInterface extends MessageInterface
      * @throws InvalidArgumentException for invalid status code arguments
      *
      */
-    public function withStatus(int $code, string $reasonPhrase = ''): static;
+    public function withStatus(int $code, string $reasonPhrase = ''): self;
 }
