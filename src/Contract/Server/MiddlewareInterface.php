@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Contract\Server;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Ghostwriter\Http\Contract\Message\ResponseInterface;
+use Ghostwriter\Http\Contract\Message\ServerRequestInterface;
 
 /**
  * Participant in processing a server request and response.
@@ -21,5 +21,8 @@ interface MiddlewareInterface
      * Processes an incoming server request in order to produce a response. If unable to produce the response itself, it
      * may delegate to the provided request handler to do so.
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface;
+    public function process(
+        ServerRequestInterface $serverRequest,
+        RequestHandlerInterface $requestHandler
+    ): ResponseInterface;
 }
