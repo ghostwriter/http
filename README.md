@@ -1,13 +1,14 @@
 # HTTP
 
-[![Continuous Integration](https://github.com/ghostwriter/http/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/continuous-integration.yml)
+[![Compliance](https://github.com/ghostwriter/http/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/continuous-integration.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/http?color=8892bf)](https://www.php.net/supported-versions)
 [![Type Coverage](https://shepherd.dev/github/ghostwriter/http/coverage.svg)](https://shepherd.dev/github/ghostwriter/http)
 [![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/http)](https://packagist.org/packages/ghostwriter/http)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/http?color=blue)](https://packagist.org/packages/ghostwriter/http)
 
-HTTP client abstraction for PHP - Provides a PSR-7, PSR-15, PSR-17 and PSR-18 implementation.
-
+HTTP Client and Server abstraction for PHP inspired by [PSR-7](https://www.php-fig.org/psr/psr-7/),
+[PSR-15](https://www.php-fig.org/psr/psr-15/), [PSR-17](https://www.php-fig.org/psr/psr-17/)
+and [PSR-18](https://www.php-fig.org/psr/psr-18/) specification.
 ## Installation
 
 You can install the package via composer:
@@ -19,7 +20,7 @@ composer require ghostwriter/http
 ## Usage
 
 ```php
-// wip
+// work in progress
 ```
 
 ## Testing
