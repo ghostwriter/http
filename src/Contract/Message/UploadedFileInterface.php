@@ -6,6 +6,14 @@ namespace Ghostwriter\Http\Contract\Message;
 
 use InvalidArgumentException;
 use RuntimeException;
+use const UPLOAD_ERR_CANT_WRITE;
+use const UPLOAD_ERR_EXTENSION;
+use const UPLOAD_ERR_FORM_SIZE;
+use const UPLOAD_ERR_INI_SIZE;
+use const UPLOAD_ERR_NO_FILE;
+use const UPLOAD_ERR_NO_TMP_DIR;
+use const UPLOAD_ERR_OK;
+use const UPLOAD_ERR_PARTIAL;
 
 /**
  * Value object representing a file uploaded through an HTTP request.
@@ -15,6 +23,20 @@ use RuntimeException;
  */
 interface UploadedFileInterface
 {
+    /**
+     * @var int[]
+     */
+    public const UPLOAD_ERROR_CODES = [
+        UPLOAD_ERR_OK,
+        UPLOAD_ERR_INI_SIZE,
+        UPLOAD_ERR_FORM_SIZE,
+        UPLOAD_ERR_PARTIAL,
+        UPLOAD_ERR_NO_FILE,
+        UPLOAD_ERR_NO_TMP_DIR,
+        UPLOAD_ERR_CANT_WRITE,
+        UPLOAD_ERR_EXTENSION,
+    ];
+
     /**
      * Retrieve the filename sent by the client.
      *
@@ -111,5 +133,5 @@ interface UploadedFileInterface
      * @throws RuntimeException         on any error during the move operation, or on
      *                                  the second or subsequent call to the method
      */
-    public function moveTo(string $targetPath);
+    public function moveTo(string $targetPath): void;
 }
