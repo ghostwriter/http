@@ -7,7 +7,8 @@ namespace Ghostwriter\Http\Factory;
 use Ghostwriter\Http\Contract\Factory\UploadedFileFactoryInterface;
 use Ghostwriter\Http\Contract\Message\StreamInterface;
 use Ghostwriter\Http\Contract\Message\UploadedFileInterface;
-use InvalidArgumentException;
+use Ghostwriter\Http\Message\UploadedFile;
+use const UPLOAD_ERR_OK;
 
 final class UploadedFileFactory implements UploadedFileFactoryInterface
 {
@@ -18,6 +19,6 @@ final class UploadedFileFactory implements UploadedFileFactoryInterface
         string $clientFilename = null,
         string $clientMediaType = null
     ): UploadedFileInterface {
-        throw new InvalidArgumentException();
+        return new UploadedFile($stream, $size ?? $stream->getSize(), $error, $clientFilename, $clientMediaType);
     }
 }
