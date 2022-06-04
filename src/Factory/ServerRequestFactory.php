@@ -7,7 +7,7 @@ namespace Ghostwriter\Http\Factory;
 use Ghostwriter\Http\Contract\Factory\ServerRequestFactoryInterface;
 use Ghostwriter\Http\Contract\Message\ServerRequestInterface;
 use Ghostwriter\Http\Contract\Message\UriInterface;
-use RuntimeException;
+use Ghostwriter\Http\Message\ServerRequest;
 
 final class ServerRequestFactory implements ServerRequestFactoryInterface
 {
@@ -16,6 +16,6 @@ final class ServerRequestFactory implements ServerRequestFactoryInterface
         string|UriInterface $uri,
         array $serverParams = []
     ): ServerRequestInterface {
-        throw new RuntimeException();
+        return new ServerRequest($method, $uri, $serverParams);
     }
 }
