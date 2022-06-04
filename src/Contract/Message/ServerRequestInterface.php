@@ -37,7 +37,7 @@ use InvalidArgumentException;
  * Additionally, this interface recognizes the utility of introspecting a
  * request to derive and match additional parameters (e.g., via URI path
  * matching, decrypting cookie values, deserializing non-form-encoded body
- * content, matching authorization headers to users, etc). These parameters
+ * content, matching authorization headers to users, etc.). These parameters
  * are stored in an "attributes" property.
  *
  * Requests are considered immutable; all methods that might change state MUST
@@ -59,10 +59,8 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @param string $name    the attribute name
      * @param mixed  $default default value to return if the attribute does not exist
-     *
-     * @return mixed
      */
-    public function getAttribute(string $name, mixed $default = null);
+    public function getAttribute(string $name, mixed $default = null): mixed;
 
     /**
      * Retrieve attributes derived from the request.
@@ -81,6 +79,8 @@ interface ServerRequestInterface extends RequestInterface
      * Retrieves cookies sent by the client to the server.
      *
      * The data MUST be compatible with the structure of the $_COOKIE superglobal.
+     *
+     * @return mixed[]
      */
     public function getCookieParams(): array;
 
@@ -107,6 +107,8 @@ interface ServerRequestInterface extends RequestInterface
      * Note: the query params might not be in sync with the URI or server params. If you need to ensure you are only
      * getting the original values, you may need to parse the query string from `getUri()->getQuery()` or from the
      * `QUERY_STRING` server param.
+     *
+     * @return mixed[]
      */
     public function getQueryParams(): array;
 
@@ -115,6 +117,8 @@ interface ServerRequestInterface extends RequestInterface
      *
      * Retrieves data related to the incoming request environment, typically derived from PHP's $_SERVER superglobal.
      * The data IS NOT REQUIRED to originate from $_SERVER.
+     *
+     * @return mixed[]
      */
     public function getServerParams(): array;
 
@@ -146,7 +150,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed  $value the value of the attribute
      *
      */
-    public function withAttribute(string $name, mixed $value): static;
+    public function withAttribute(string $name, mixed $value): self;
 
     /**
      * Return an instance with the specified cookies.
@@ -163,7 +167,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param array $cookies array of key/value pairs representing cookies
      *
      */
-    public function withCookieParams(array $cookies): static;
+    public function withCookieParams(array $cookies): self;
 
     /**
      * Return an instance that removes the specified derived request attribute.
@@ -178,7 +182,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param string $name the attribute name
      *
      */
-    public function withoutAttribute(string $name): static;
+    public function withoutAttribute(string $name): self;
 
     /**
      * Return an instance with the specified body parameters.
@@ -205,7 +209,7 @@ interface ServerRequestInterface extends RequestInterface
      *                                  provided
      *
      */
-    public function withParsedBody(null|array|object $data): static;
+    public function withParsedBody(null|array|object $data): self;
 
     /**
      * Return an instance with the specified query string arguments.
@@ -225,7 +229,7 @@ interface ServerRequestInterface extends RequestInterface
      *                     $_GET
      *
      */
-    public function withQueryParams(array $query): static;
+    public function withQueryParams(array $query): self;
 
     /**
      * Create a new instance with the specified uploaded files.
@@ -238,5 +242,5 @@ interface ServerRequestInterface extends RequestInterface
      * @throws InvalidArgumentException if an invalid structure is provided
      *
      */
-    public function withUploadedFiles(array $uploadedFiles): static;
+    public function withUploadedFiles(array $uploadedFiles): self;
 }
