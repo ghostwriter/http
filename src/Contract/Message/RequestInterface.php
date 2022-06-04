@@ -28,6 +28,56 @@ use InvalidArgumentException;
 interface RequestInterface extends MessageInterface
 {
     /**
+     * @var string
+     */
+    public const METHOD_CONNECT = 'CONNECT';
+
+    /**
+     * @var string
+     */
+    public const METHOD_DELETE  = 'DELETE';
+
+    /**
+     * @var string
+     */
+    public const METHOD_GET     = 'GET';
+
+    /**
+     * @var string
+     */
+    public const METHOD_HEAD    = 'HEAD';
+
+    /**
+     * @var string
+     */
+    public const METHOD_OPTIONS = 'OPTIONS';
+
+    /**
+     * @var string
+     */
+    public const METHOD_PATCH   = 'PATCH';
+
+    /**
+     * @var string
+     */
+    public const METHOD_POST    = 'POST';
+
+    /**
+     * @var string
+     */
+    public const METHOD_PURGE   = 'PURGE';
+
+    /**
+     * @var string
+     */
+    public const METHOD_PUT     = 'PUT';
+
+    /**
+     * @var string
+     */
+    public const METHOD_TRACE   = 'TRACE';
+
+    /**
      * Retrieves the HTTP method of the request.
      *
      * @return string returns the request method
@@ -74,7 +124,7 @@ interface RequestInterface extends MessageInterface
      * @throws InvalidArgumentException for invalid HTTP methods
      *
      */
-    public function withMethod(string $method): static;
+    public function withMethod(string $method): self;
 
     /**
      * Return an instance with the specific request-target.
@@ -85,12 +135,11 @@ interface RequestInterface extends MessageInterface
      * This method MUST be implemented in such a way as to retain the immutability of the message, and MUST return an
      * instance that has the changed request target.
      *
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3 (for the various
-     * request-target forms allowed in request messages)
+     * @link http://tools.ietf.org/html/rfc7230#section-5.3
      *
-     *
+     * (for the various request-target forms allowed in request messages)
      */
-    public function withRequestTarget(mixed $requestTarget): static;
+    public function withRequestTarget(mixed $requestTarget): self;
 
     /**
      * Returns an instance with the provided URI.
@@ -123,5 +172,5 @@ interface RequestInterface extends MessageInterface
      * @param bool         $preserveHost preserve the original state of the Host header
      *
      */
-    public function withUri(UriInterface $uri, bool $preserveHost = false): static;
+    public function withUri(UriInterface $uri, bool $preserveHost = false): self;
 }
