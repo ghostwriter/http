@@ -1,2 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.22.0@fc2c6ab4d5fa5d644d8617089f012f3bb84b8703"/>
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+  <file src="src/Factory/StreamFactory.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>! is_resource($resource)</code>
+    </DocblockTypeContradiction>
+  </file>
+  <file src="src/Message/AbstractRequest.php">
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;requestTarget</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Message/Request.php">
+    <MismatchingDocblockParamType occurrences="1">
+      <code>resource|StreamInterface|string</code>
+    </MismatchingDocblockParamType>
+  </file>
+  <file src="src/Message/Response.php">
+    <MissingConstructor occurrences="2">
+      <code>$code</code>
+      <code>$reasonPhrase</code>
+    </MissingConstructor>
+  </file>
+  <file src="src/Message/Streamo.php">
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;stream</code>
+    </InvalidPropertyAssignmentValue>
+    <MissingReturnType occurrences="1">
+      <code>getUri</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="2">
+      <code>$this-&gt;uri</code>
+      <code>$this-&gt;uri</code>
+    </MixedAssignment>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$size</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCondition occurrences="1">
+      <code>false !== $this-&gt;uri</code>
+    </RedundantCondition>
+  </file>
+  <file src="src/Message/Uri.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;sanitizeQueryOrFragment($fragment)</code>
+    </NullableReturnStatement>
+    <PossiblyNullArgument occurrences="2">
+      <code>$key</code>
+      <code>$key</code>
+    </PossiblyNullArgument>
+    <PossiblyNullOperand occurrences="2">
+      <code>$this-&gt;sanitizeQueryOrFragment($key)</code>
+      <code>$this-&gt;sanitizeQueryOrFragment($value)</code>
+    </PossiblyNullOperand>
+    <PossiblyNullPropertyAssignmentValue occurrences="3">
+      <code>$this-&gt;sanitizePath($parts['path'])</code>
+      <code>$this-&gt;sanitizeQueryOrFragment($parts['fragment'] ?? '')</code>
+      <code>$this-&gt;sanitizeQueryOrFragment($parts['query'] ??'')</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$parts['path']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
+</files>
