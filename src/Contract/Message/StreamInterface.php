@@ -15,6 +15,11 @@ use RuntimeException;
 interface StreamInterface
 {
     /**
+     * @var int
+     */
+    public const MEGABYTE = 1_048_576;
+
+    /**
      * Reads all data from the stream into a string, from the beginning to end.
      *
      * This method MUST attempt to seek to the beginning of the stream before reading data and read the stream until the
@@ -64,13 +69,13 @@ interface StreamInterface
      *
      * @link http://php.net/manual/en/function.stream-get-meta-data.php
      *
-     * @param string $key specific metadata to retrieve
+     * @param null|string $key specific metadata to retrieve
      *
      * @return null|array|mixed Returns an associative array if no key is
      *                          provided. Returns a specific key value if a key is provided and the
      *                          value is found, or null if the key is not found.
      */
-    public function getMetadata(string $key = null): mixed;
+    public function getMetadata(?string $key = null): mixed;
 
     /**
      * Get the size of the stream if known.
@@ -118,7 +123,7 @@ interface StreamInterface
      *
      * @throws RuntimeException on failure
      */
-    public function rewind();
+    public function rewind(): void;
 
     /**
      * Seek to a position in the stream.
@@ -134,7 +139,7 @@ interface StreamInterface
      *
      * @throws RuntimeException on failure
      */
-    public function seek(int $offset, int $whence = SEEK_SET);
+    public function seek(int $offset, int $whence = SEEK_SET): void;
 
     /**
      * Returns the current position of the file read/write pointer.
