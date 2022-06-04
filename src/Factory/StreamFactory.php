@@ -6,23 +6,34 @@ namespace Ghostwriter\Http\Factory;
 
 use Ghostwriter\Http\Contract\Factory\StreamFactoryInterface;
 use Ghostwriter\Http\Contract\Message\StreamInterface;
+use Ghostwriter\Http\Message\Stream;
 use InvalidArgumentException;
-use RuntimeException;
+use function fopen;
+use function fwrite;
+use function rewind;
 
 final class StreamFactory implements StreamFactoryInterface
 {
     public function createStream(string $content = ''): StreamInterface
     {
-        throw new RuntimeException();
+        $resource = fopen('php://temp', 'rb+');
+        fwrite($resource, $content);
+        rewind($resource);
+
+        return $this->createStreamFromResource($resource);
     }
 
-    public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
+    public function createStreamFromFile(string $filename, string $mode = 'rb+'): StreamInterface
     {
-        throw new InvalidArgumentException();
+        return new Stream($filename, $mode);
     }
 
     public function createStreamFromResource($resource): StreamInterface
     {
-        throw new InvalidArgumentException();
+        if (! is_resource($resource) || 'stream' !== get_resource_type($resource)) {
+            throw new InvalidArgumentException('Invalid stream resource provided');
+        }
+
+        return Stream::create($resource);
     }
 }
