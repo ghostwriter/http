@@ -35,12 +35,7 @@
     ],
     "require": {
         "php": ">=8.0,<8.2",
-        "ext-curl": ">=7.38",
-        "psr/http-client": "*",
-        "psr/http-factory": "*",
-        "psr/http-message": "*",
-        "psr/http-server-handler": "*",
-        "psr/http-server-middleware": "*"
+        "ext-curl": ">=7.38"
     },
     "require-dev": {
         "phpbench/phpbench": "^1.2.5",
