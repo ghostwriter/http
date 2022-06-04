@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Contract\Server;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Ghostwriter\Http\Contract\Message\ResponseInterface;
+use Ghostwriter\Http\Contract\Message\ServerRequestInterface;
 
 /**
  * Handles a server request and produces a response.
@@ -19,5 +19,5 @@ interface RequestHandlerInterface
      *
      * May call other collaborating code to generate the response.
      */
-    public function handle(ServerRequestInterface $request): ResponseInterface;
+    public function handle(ServerRequestInterface $serverRequest): ResponseInterface;
 }
