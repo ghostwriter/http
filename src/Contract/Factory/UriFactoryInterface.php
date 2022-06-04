@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Contract\Factory;
 
+use Ghostwriter\Http\Contract\Message\UriInterface;
 use InvalidArgumentException;
 
 interface UriFactoryInterface
