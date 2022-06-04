@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Message;
 
 use Ghostwriter\Http\Contract\Message\ServerRequestInterface;
-use Ghostwriter\Http\Contract\Message\StreamInterface;
 use Ghostwriter\Http\Contract\Message\UriInterface;
-use InvalidArgumentException;
 use function is_string;
 
 final class ServerRequest extends AbstractRequest implements ServerRequestInterface
