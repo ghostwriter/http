@@ -71,9 +71,24 @@ interface StreamInterface
      *
      * @param null|string $key specific metadata to retrieve
      *
-     * @return null|array|mixed Returns an associative array if no key is
-     *                          provided. Returns a specific key value if a key is provided and the
-     *                          value is found, or null if the key is not found.
+     * @return null|array|mixed Returns an associative array if no key is provided.
+     *                          Returns a specific key value if a key is provided and the value is found,
+     *                          or null if the key is not found.
+     *
+     * #[ArrayShape([
+     * "timed_out" => "bool",
+     * "blocked" => "bool",
+     * "eof" => "bool",
+     * "unread_bytes" => "int",
+     * "stream_type" => "string",
+     * "wrapper_type" => "string",
+     * "wrapper_data" => "mixed",
+     * "mode" => "string",
+     * "seekable" => "bool",
+     * "uri" => "string",
+     * "crypto" => "array",
+     * "mediatype" => "string"
+     * ])]
      */
     public function getMetadata(?string $key = null): mixed;
 
