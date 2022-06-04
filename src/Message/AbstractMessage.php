@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 abstract class AbstractMessage implements MessageInterface
 {
-    protected array $headers;
+    protected array $headers = [];
 
     public function getBody(): StreamInterface
     {
