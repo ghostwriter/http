@@ -115,7 +115,7 @@ interface MessageInterface
      * @throws InvalidArgumentException for invalid header names or values
      *
      */
-    public function withAddedHeader(string $name, array|string $value): static;
+    public function withAddedHeader(string $name, array|string $value): self;
 
     /**
      * Return an instance with the specified message body.
@@ -125,12 +125,11 @@ interface MessageInterface
      * This method MUST be implemented in such a way as to retain the immutability of the message, and MUST return a new
      * instance that has the new body stream.
      *
-     * @param StreamInterface $body body
+     * @param StreamInterface $stream body
      *
      * @throws InvalidArgumentException when the body is not valid
-     *
      */
-    public function withBody(StreamInterface $body): static;
+    public function withBody(StreamInterface $stream): self;
 
     /**
      * Return an instance with the provided value replacing the specified header.
@@ -147,7 +146,7 @@ interface MessageInterface
      * @throws InvalidArgumentException for invalid header names or values
      *
      */
-    public function withHeader(string $name, array|string $value): static;
+    public function withHeader(string $name, array|string $value): self;
 
     /**
      * Return an instance without the specified header.
@@ -160,7 +159,7 @@ interface MessageInterface
      * @param string $name case-insensitive header field name to remove
      *
      */
-    public function withoutHeader(string $name): static;
+    public function withoutHeader(string $name): self;
 
     /**
      * Return an instance with the specified HTTP protocol version.
@@ -173,5 +172,5 @@ interface MessageInterface
      * @param string $version HTTP protocol version
      *
      */
-    public function withProtocolVersion(string $version): static;
+    public function withProtocolVersion(string $version): self;
 }
