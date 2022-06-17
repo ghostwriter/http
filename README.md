@@ -9,6 +9,11 @@
 HTTP Client and Server abstraction for PHP inspired by [PSR-7](https://www.php-fig.org/psr/psr-7/),
 [PSR-15](https://www.php-fig.org/psr/psr-15/), [PSR-17](https://www.php-fig.org/psr/psr-17/)
 and [PSR-18](https://www.php-fig.org/psr/psr-18/) specification.
+
+> **Warning**
+> 
+> This project is not finished yet, work in progress.
+ 
 ## Installation
 
 You can install the package via composer:
