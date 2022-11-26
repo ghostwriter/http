@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Contract\Factory;
 
 use Ghostwriter\Http\Contract\Message\RequestInterface;
+use Ghostwriter\Http\Contract\Message\RequestMethodInterface;
 use Ghostwriter\Http\Contract\Message\UriInterface;
 
-interface RequestFactoryInterface
+interface RequestFactoryInterface extends RequestMethodInterface
 {
     /**
      * Create a new request.
@@ -17,5 +18,5 @@ interface RequestFactoryInterface
      *                                    the factory MUST create a UriInterface instance based on it.
      *
      */
-    public function createRequest(string $method, UriInterface|string $uri): RequestInterface;
+    public function createRequest(string $method, string|UriInterface $uri): RequestInterface;
 }
