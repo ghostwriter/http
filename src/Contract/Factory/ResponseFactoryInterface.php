@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Contract\Factory;
 
 use Ghostwriter\Http\Contract\Message\ResponseInterface;
+use Ghostwriter\Http\Contract\Message\StatusCodeInterface;
 
-interface ResponseFactoryInterface
+interface ResponseFactoryInterface extends StatusCodeInterface
 {
     /**
      * Create a new response.
@@ -17,5 +18,5 @@ interface ResponseFactoryInterface
      *                             the defaults as suggested in the HTTP specification
      *
      */
-    public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface;
+    public function createResponse(int $code = self::STATUS_OK, string $reasonPhrase = ''): ResponseInterface;
 }
