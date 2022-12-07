@@ -13,40 +13,22 @@ use ReflectionObject;
 /**
  * @coversDefaultClass \Ghostwriter\Http\Message\Uri
  *
- * @psalm-suppress MissingConstructor
+ * @small
  *
  * @internal
- *
- * @small
  */
 final class UriTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->uri = $this->createUri('http://user:pass@example.com:8080/path/?query=string#fragment');
-        // http://user@example.com:80/path/../to/parent/folder?query=string#fragment
-    }
+    private ?Uri $uri = null;
 
     public function createUri(string $uri = ''): Uri
     {
-        return new Uri($uri);
+        return $this->uri = new Uri($uri);
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Uri::__construct
-     * @covers \Ghostwriter\Http\Message\Uri::encode
      * @covers \Ghostwriter\Http\Message\Uri::getAuthority
-     * @covers \Ghostwriter\Http\Message\Uri::normalize
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeFragment
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeHost
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeInvalidUTF8Characters
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizePath
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizePort
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeQuery
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeQueryStringKeyOrValue
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeScheme
-     * @covers \Ghostwriter\Http\Message\Uri::sanitizeUserInfo
      */
     public function test0AuthorityMustReturnAnEmptyStringIfNotPresent(): void
     {
@@ -398,7 +380,7 @@ final class UriTest extends TestCase
      */
     public function test0QueryMustNotContainALeadingQuestionMarkCharacter(): void
     {
-        self::expectNotToPerformAssertions();
+        $this->expectNotToPerformAssertions();
     }
 
     /**
@@ -1350,7 +1332,8 @@ final class UriTest extends TestCase
      */
     public function testStripsQueryPrefixIfPresent(): void
     {
-        $new = $this->uri->withQuery('?foo=bar');
+        $new = $this->createUri()
+            ->withQuery('?foo=bar');
         self::assertSame('foo=bar', $new->getQuery());
     }
 
@@ -1634,7 +1617,8 @@ final class UriTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid path');
 
-        $this->uri->withPath($path);
+        $this->createUri()
+            ->withPath($path);
     }
 
     /**
@@ -1717,7 +1701,8 @@ final class UriTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(InvalidArgumentException::invalidPort($port)->getMessage());
         /** @psalm-suppress MixedArgument */
-        $this->uri->withPort($port);
+        $this->createUri()
+            ->withPort($port);
     }
 
     /**
@@ -1801,7 +1786,8 @@ final class UriTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid query string');
 
-        $this->uri->withQuery($query);
+        $this->createUri()
+            ->withQuery($query);
     }
 
     /**
@@ -1941,10 +1927,11 @@ final class UriTest extends TestCase
      */
     public function testWithUserInfoReturnsNewInstanceWithProvidedUser(): void
     {
-        $new = $this->uri->withUserInfo('ghostwriter');
+        $new = $this->createUri()
+            ->withUserInfo('ghostwriter');
         self::assertNotSame($this->uri, $new);
         self::assertSame('ghostwriter', $new->getUserInfo());
-        self::assertSame('http://ghostwriter@example.com:8080/path/?query=string#fragment', (string) $new);
+        self::assertSame('//ghostwriter@', (string) $new);
     }
 
     /**
@@ -1969,10 +1956,11 @@ final class UriTest extends TestCase
      */
     public function testWithUserInfoReturnsNewInstanceWithProvidedUserAndPassword(): void
     {
-        $new = $this->uri->withUserInfo('ghostwriter', 'secret');
+        $new = $this->createUri()
+            ->withUserInfo('ghostwriter', 'secret');
         self::assertNotSame($this->uri, $new);
         self::assertSame('ghostwriter:secret', $new->getUserInfo());
-        self::assertSame('http://ghostwriter:secret@example.com:8080/path/?query=string#fragment', (string) $new);
+        self::assertSame('//ghostwriter:secret@', (string) $new);
     }
 
     /**
@@ -1996,8 +1984,9 @@ final class UriTest extends TestCase
      */
     public function testWithUserInfoReturnsSameInstanceIfUserAndPasswordAreSameAsBefore(): void
     {
-        $new = $this->uri->withUserInfo('user', 'pass');
-        self::assertSame($this->uri, $new);
+        $uri = new Uri('http://user:pass@example.com:8080/path/?query=string#fragment');
+        $new = $uri->withUserInfo('user', 'pass');
+        self::assertSame($uri, $new);
         self::assertSame('user:pass', $new->getUserInfo());
         self::assertSame('http://user:pass@example.com:8080/path/?query=string#fragment', (string) $new);
     }
