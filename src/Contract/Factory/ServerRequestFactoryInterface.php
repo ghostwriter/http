@@ -24,7 +24,7 @@ interface ServerRequestFactoryInterface
      */
     public function createServerRequest(
         string $method,
-        UriInterface|string $uri,
+        string|UriInterface $uri,
         array $serverParams = []
     ): ServerRequestInterface;
 }
