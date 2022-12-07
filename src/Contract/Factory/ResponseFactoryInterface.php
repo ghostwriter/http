@@ -18,5 +18,8 @@ interface ResponseFactoryInterface extends StatusCodeInterface
      *                             the defaults as suggested in the HTTP specification
      *
      */
-    public function createResponse(int $code = self::STATUS_OK, string $reasonPhrase = ''): ResponseInterface;
+    public function createResponse(
+        int $code = self::HTTP_200_OK,
+        string $reasonPhrase = self::HTTP_REASON_PHRASE[self::HTTP_200_OK]
+    ): ResponseInterface;
 }
