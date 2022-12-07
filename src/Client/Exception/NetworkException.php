@@ -15,9 +15,9 @@ final class NetworkException extends RuntimeException implements NetworkExceptio
         private RequestInterface $request,
         string $message,
         int $code = 0,
-        Throwable $previous = null
+        Throwable $throwable = null
     ) {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $throwable);
     }
 
     public function getRequest(): RequestInterface
