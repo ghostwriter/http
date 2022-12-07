@@ -33,15 +33,14 @@ interface StreamFactoryInterface
      * @throws RuntimeException         if the file cannot be opened
      * @throws InvalidArgumentException if the mode is invalid
      */
-    public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface;
+    public function createStreamFromFile(string $filename, string $mode = 'r+b'): StreamInterface;
 
     /**
      * Create a new stream from an existing resource.
      *
      * The stream MUST be readable and may be writable.
      *
-     * @param resource $resource PHP resource to use as basis of stream
-     *
+     * @param resource|StreamInterface $resource PHP resource to use as basis of stream
      */
-    public function createStreamFromResource($resource): StreamInterface;
+    public function createStreamFromResource(mixed $resource): StreamInterface;
 }
