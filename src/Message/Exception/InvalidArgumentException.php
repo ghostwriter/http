@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Message\Exception;
 
-final class InvalidArgumentException extends \InvalidArgumentException
+use Ghostwriter\Http\Contract\Message\Exception\MessageExceptionInterface;
+
+final class InvalidArgumentException extends \InvalidArgumentException implements MessageExceptionInterface
 {
     public static function invalidFragment(string $fragment): self
     {
@@ -49,6 +51,21 @@ final class InvalidArgumentException extends \InvalidArgumentException
     public static function invalidScheme(): self
     {
         return new self('Invalid scheme.');
+    }
+
+    public static function invalidStreamCreateArgument(): self
+    {
+        return new self('First argument to Stream::create() must be a string, resource or StreamInterface.');
+    }
+
+    public static function invalidStreamProvided(): self
+    {
+        return new self('Invalid stream provided; must be a string stream identifier or stream resource.');
+    }
+
+    public static function invalidStreamResourceUri(string $resourceUri): self
+    {
+        return new self(sprintf('Invalid stream resource uri: "%s".', $resourceUri));
     }
 
     public static function invalidUri(string $uri): self
