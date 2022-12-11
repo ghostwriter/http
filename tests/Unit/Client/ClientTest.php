@@ -13,10 +13,8 @@ use Ghostwriter\Http\Contract\Client\ClientInterface;
 use Ghostwriter\Http\Contract\Client\Exception\ClientExceptionInterface;
 use Ghostwriter\Http\Contract\Client\Exception\NetworkExceptionInterface;
 use Ghostwriter\Http\Contract\Client\Exception\RequestExceptionInterface;
-use Ghostwriter\Http\Factory\RequestFactory;
 use Ghostwriter\Http\Factory\ResponseFactory;
 use Ghostwriter\Http\Message\Request;
-use Ghostwriter\Http\Message\Uri;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -34,7 +32,7 @@ final class ClientTest extends TestCase
      */
     public function clientExceptions(): Generator
     {
-        $request = (new RequestFactory())->createRequest(Request::METHOD_GET, new Uri(''));
+        $request = new Request();
         yield from [
             ClientException::class => [new ClientException()],
             RequestException::class => [new RequestException($request, 'RequestException')],
@@ -80,28 +78,52 @@ final class ClientTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-    /** @covers ClientException::__construct */
+    /**
+     * @covers \Ghostwriter\Http\Client\Exception\ClientException::__construct
+     */
     public function testClientMustThrowAnInstanceOfClientExceptionInterfaceIfItIsUnableToSendTheHttpRequestAtAll(): void
     {
         $this->expectException(ClientExceptionInterface::class);
         throw new ClientException();
     }
 
-    /** @covers ClientException::__construct */
+    /**
+     * @covers \Ghostwriter\Http\Client\Exception\ClientException::__construct
+     */
     public function testClientMustThrowAnInstanceOfClientExceptionInterfaceIfTheHttpResponseCouldNotBeParsedIntoAPsr7ResponseObject(): void
     {
         $this->expectException(ClientExceptionInterface::class);
         throw new ClientException();
     }
 
-    /** @covers NetworkException::__construct */
+    /**
+     * @covers \Ghostwriter\Http\Client\Exception\NetworkException::__construct
+     * @covers \Ghostwriter\Http\Message\Request::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::create
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Uri::__construct
+     */
     public function testClientMustThrowAnInstanceOfNetworkExceptionInterfaceIfTheRequestCannotBeSentDueToANetworkFailureOfAnyKindIncludingATimeout(): void
     {
         $this->expectException(NetworkExceptionInterface::class);
         throw new NetworkException(new Request(Request::METHOD_GET), __METHOD__);
     }
 
-    /** @covers RequestException::__construct */
+    /**
+     * @covers \Ghostwriter\Http\Client\Exception\RequestException::__construct
+     * @covers \Ghostwriter\Http\Message\Request::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::create
+     * @covers \Ghostwriter\Http\Message\Uri::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     */
     public function testClientMustThrowAnInstanceOfRequestExceptionInterfaceIfARequestCannotBeSentBecauseTheRequestMessageIsMissingSomeCriticalPieceOfInformation(): void
     {
         // missing a Host or Method
@@ -109,7 +131,15 @@ final class ClientTest extends TestCase
         throw new RequestException(new Request(Request::METHOD_GET), __METHOD__);
     }
 
-    /** @covers RequestException::__construct */
+    /**
+     * @covers \Ghostwriter\Http\Client\Exception\RequestException::__construct
+     * @covers \Ghostwriter\Http\Message\Request::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::create
+     * @covers \Ghostwriter\Http\Message\Uri::__construct
+     */
     public function testClientMustThrowAnInstanceOfRequestExceptionInterfaceIfARequestCannotBeSentBecauseTheRequestMessageIsNotAWellFormedHttpRequest(): void
     {
         $this->expectException(RequestExceptionInterface::class);
