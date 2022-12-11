@@ -12,7 +12,8 @@ final class RequestHandler extends AbstractRequestHandler
 {
     public function __construct(
         private ResponseFactoryInterface $responseFactory
-    ) {}
+    ) {
+    }
 
     public function handle(ServerRequestInterface $serverRequest): ResponseInterface
     {
