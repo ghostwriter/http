@@ -34,6 +34,28 @@ final class UploadedFile implements UploadedFileInterface
         }
     }
 
+    /**
+     * @param array{
+     *     name:string,
+     *     type:string,
+     *     size:int,
+     *     error:int,
+     *     tmp_name:string,
+     *     full_path:string
+     * } $upload
+     *
+     */
+    public static function create(array $upload): UploadedFileInterface
+    {
+        return new self(
+            Stream::fromResourceUri($upload['full_path']),
+            $upload['size'],
+            $upload['error'],
+            $upload['name'],
+            $upload['type']
+        );
+    }
+
     public function getClientFilename(): ?string
     {
         return $this->clientFilename;
@@ -85,6 +107,11 @@ final class UploadedFile implements UploadedFileInterface
             if (0 === $destination->write($stream->read(StreamInterface::MEGABYTE))) {
                 break;
             }
+        }
+
+        $streamUri = $stream->getMetadata('uri');
+        if (is_file($streamUri)) {
+            unlink($streamUri);
         }
     }
 }
