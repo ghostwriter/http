@@ -9,11 +9,6 @@ use Throwable;
 
 final class InvalidArgumentException extends \InvalidArgumentException implements MessageExceptionInterface
 {
-    public static function invalidStreamTargetProvided(Throwable $throwable): self
-    {
-        return new self(sprintf('Invalid stream target provided: %s', $throwable->getMessage()));
-    }
-
     public static function invalidFragment(string $fragment): self
     {
         return new self(sprintf('Invalid fragment: "%s".', $fragment));
@@ -72,6 +67,11 @@ final class InvalidArgumentException extends \InvalidArgumentException implement
     public static function invalidStreamResourceUri(string $resourceUri): self
     {
         return new self(sprintf('Invalid stream resource uri: "%s".', $resourceUri));
+    }
+
+    public static function invalidStreamTargetProvided(Throwable $throwable): self
+    {
+        return new self(sprintf('Invalid stream target provided: %s', $throwable->getMessage()));
     }
 
     public static function invalidUri(string $uri): self
