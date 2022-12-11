@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Tests\Unit\Message;
 
+use Ghostwriter\Http\Message\Exception\StreamIsInAnUnusableStateException;
+use Ghostwriter\Http\Message\Exception\StreamIsNotSeekableException;
+use Ghostwriter\Http\Message\Exception\UnableToSeekInStreamException;
 use Ghostwriter\Http\Message\Stream;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -22,7 +25,7 @@ final class StreamTest extends TestCase
     /**
      * @var string
      */
-    private const BLM = '#BlackLivesMatter';
+    private const BLACK_LIVES_MATTER = '#BlackLivesMatter';
 
     /**
      * @var string
@@ -30,7 +33,7 @@ final class StreamTest extends TestCase
     private const IMG_URL = 'https://github.com/ghostwriter.png';
 
     /**
-     * @param null|resource|string $data
+     * @param resource|string $data
      */
     public function createStream(mixed $data): Stream
     {
@@ -39,15 +42,14 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::close
      * @covers \Ghostwriter\Http\Message\Stream::detach
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testClose(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
 
         self::assertIsResource($resource);
@@ -57,9 +59,8 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::detach
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testDetach(): void
     {
@@ -68,45 +69,51 @@ final class StreamTest extends TestCase
         $stream = $this->createStream($resource);
 
         self::assertSame($resource, $stream->detach());
+        self::assertNull($stream->detach());
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::eof
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::read
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::tell
      */
-    public function testEof(): void
+    public function testEofReturnsTrueIfTheStreamIsAtTheEndOfTheStream(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
 
+        self::assertSame(17, mb_strlen(self::BLACK_LIVES_MATTER));
         $stream->seek(0);
         self::assertFalse($stream->eof());
+
         $stream->read(20);
         $stream->read(10);
         self::assertTrue($stream->eof());
+        self::assertSame(17, $stream->tell());
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::getContents
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::write
      */
     public function testGetContents(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
 
         $stream = $this->createStream($resource);
         $stream->rewind();
@@ -118,9 +125,8 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::getSize
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testGetSize(): void
     {
@@ -135,9 +141,8 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testIsNotReadable(): void
     {
@@ -148,9 +153,8 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testIsNotSeekable(): void
     {
@@ -163,8 +167,7 @@ final class StreamTest extends TestCase
      * @group internet
      *
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::isWritable
      */
     public function testIsNotWritable(): void
@@ -176,61 +179,58 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testIsReadable(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
         self::assertTrue($stream->isReadable());
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
-    public function testIsSeekable(): void
+    public function testIsSeekableReturnsWhetherOrNotTheStreamIsSeekable(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
         self::assertTrue($stream->isSeekable());
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::isWritable
      */
     public function testIsWritable(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
         self::assertTrue($stream->isWritable());
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::read
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
     ┴
      */
     public function testRead(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
         $stream->rewind();
 
@@ -243,31 +243,47 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
-     * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::__toString
+     * @covers \Ghostwriter\Http\Message\Stream::getContents
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     */
+    public function testReadsAllDataFromTheStreamIntoAStringFromTheBeginningToEnd(): void
+    {
+        $stream = $this->createStream(fopen(__FILE__, 'r+b'));
+
+        self::assertStringEqualsFile(__FILE__, $stream->__toString());
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::isSeekable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::rewind
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
      */
     public function testRewind(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
         $stream->rewind();
 
-        self::assertSame(self::BLM, fread($resource, mb_strlen(self::BLM)));
+        self::assertSame(self::BLACK_LIVES_MATTER, fread($resource, mb_strlen(self::BLACK_LIVES_MATTER)));
     }
 
     /**
      * @group internet
      *
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
      */
     public function testRewindNotSeekable(): void
     {
@@ -280,15 +296,15 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
      */
-    public function testSeek(): void
+    public function testSeekSeekToAPositionInTheStream(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         $stream = $this->createStream($resource);
         $stream->seek(3);
 
@@ -297,17 +313,64 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::detach
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     */
+    public function testSeekThrowsStreamIsInAnUnusableStateExceptionOnFailure(): void
+    {
+        $stream = Stream::fromString(self::BLACK_LIVES_MATTER);
+        $stream->detach();
+        $this->expectException(StreamIsInAnUnusableStateException::class);
+        $stream->seek(3);
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::isSeekable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     */
+    public function testSeekThrowsStreamIsNotSeekableExceptionOnFailure(): void
+    {
+        $resource = fopen(self::IMG_URL, 'rb');
+        $stream = $this->createStream($resource);
+        $this->expectException(StreamIsNotSeekableException::class);
+        $stream->seek(PHP_INT_MAX, SEEK_END);
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::isSeekable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     */
+    public function testSeekThrowsUnableToSeekInStreamExceptionOnFailure(): void
+    {
+        $stream = Stream::fromString(self::BLACK_LIVES_MATTER);
+        $this->expectException(UnableToSeekInStreamException::class);
+        $stream->seek(PHP_INT_MAX, SEEK_END);
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::isSeekable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::seek
      * @covers \Ghostwriter\Http\Message\Stream::tell
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::write
      */
     public function testTell(): void
     {
-        $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
-        $stream = $this->createStream($resource);
+        $stream = new Stream('php://memory', 'r+b');
+        $stream->write(self::BLACK_LIVES_MATTER);
 
         self::assertSame(17, $stream->tell());
         $stream->seek(0);
@@ -320,14 +383,70 @@ final class StreamTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::__toString
-     * @covers \Ghostwriter\Http\Message\Stream::attach
-     * @covers \Ghostwriter\Http\Message\Stream::getContents
-     * @covers \Ghostwriter\Http\Message\Stream::isReadable
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::tell
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     */
+    public function testTellReturnsTheCurrentPositionOfTheFileReadWritePointer(): void
+    {
+        $resource = fopen('php://memory', 'rwb');
+        fwrite($resource, self::BLACK_LIVES_MATTER);
+        $stream = $this->createStream($resource);
+        self::assertSame(17, $stream->tell());
+        $stream->seek(0);
+        self::assertSame(0, $stream->tell());
+        $stream->seek(3);
+        self::assertSame(3, $stream->tell());
+        $stream->seek(6);
+        self::assertSame(6, $stream->tell());
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::detach
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::tell
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     */
+    public function testTellThrowsRuntimeExceptionOnError(): void
+    {
+        $stream = Stream::fromString(self::BLACK_LIVES_MATTER);
+        $stream->detach();
+        $this->expectException(StreamIsInAnUnusableStateException::class);
+        $stream->tell();
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::detach
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::tell
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::__toString
+     * @covers \Ghostwriter\Http\Message\Stream::getContents
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::write
+     */
+    public function testToStringMethodMustAttemptToSeekToTheBeginningOfTheStreamBeforeReadingDataAndReadTheStreamUntilTheEndIsReached(): void
+    {
+        $stream = new Stream('php://temp', 'r+b');
+        $stream->write(self::BML);
+        self::assertSame(self::BML, $stream->__toString());
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::__toString
+     * @covers \Ghostwriter\Http\Message\Stream::getContents
+     * @covers \Ghostwriter\Http\Message\Stream::rewind
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      */
     public function testToStringReadOnlyStreams(): void
     {
@@ -342,36 +461,36 @@ final class StreamTest extends TestCase
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
      * @covers \Ghostwriter\Http\Message\Stream::__toString
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::getContents
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
      */
     public function testToStringRewindStreamBeforeToString(): void
     {
         $resource = fopen('php://memory', 'rwb');
-        fwrite($resource, self::BLM);
+        fwrite($resource, self::BLACK_LIVES_MATTER);
         fseek($resource, 3);
         $stream = $this->createStream($resource);
 
         $content = (string) $stream;
-        self::assertSame(self::BLM, $content);
+        self::assertSame(self::BLACK_LIVES_MATTER, $content);
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
      * @covers \Ghostwriter\Http\Message\Stream::__toString
-     * @covers \Ghostwriter\Http\Message\Stream::attach
      * @covers \Ghostwriter\Http\Message\Stream::getContents
      * @covers \Ghostwriter\Http\Message\Stream::isReadable
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
-     * @covers \Ghostwriter\Http\Message\Stream::isValidStreamResourceType
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::isWritable
      * @covers \Ghostwriter\Http\Message\Stream::rewind
      * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
      * @covers \Ghostwriter\Http\Message\Stream::write
      */
     public function testWrite(): void
@@ -382,6 +501,6 @@ final class StreamTest extends TestCase
         $bytes = $stream->write('LivesMatter');
 
         self::assertSame(11, $bytes);
-        self::assertSame(self::BLM, (string) $stream);
+        self::assertSame(self::BLACK_LIVES_MATTER, (string) $stream);
     }
 }
