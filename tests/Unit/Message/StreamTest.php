@@ -435,8 +435,8 @@ final class StreamTest extends TestCase
     public function testToStringMethodMustAttemptToSeekToTheBeginningOfTheStreamBeforeReadingDataAndReadTheStreamUntilTheEndIsReached(): void
     {
         $stream = new Stream('php://temp', 'r+b');
-        $stream->write(self::BML);
-        self::assertSame(self::BML, $stream->__toString());
+        $stream->write(self::BLACK_LIVES_MATTER);
+        self::assertSame(self::BLACK_LIVES_MATTER, $stream->__toString());
     }
 
     /**
