@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Contract\Message;
 
 use RuntimeException;
+use Stringable;
 
 /**
  * Describes a data stream.
@@ -12,7 +13,7 @@ use RuntimeException;
  * Typically, an instance will wrap a PHP stream; this interface provides a wrapper around the most common operations,
  * including serialization of the entire stream to a string.
  */
-interface StreamInterface
+interface StreamInterface extends Stringable
 {
     /**
      * @var int
@@ -56,9 +57,7 @@ interface StreamInterface
     /**
      * Returns the remaining contents in a string.
      *
-     * @throws RuntimeException if unable to read or an error occurs while
-     *                          reading
-     *
+     * @throws RuntimeException if unable to read or an error occurs while reading
      */
     public function getContents(): string;
 
