@@ -21,6 +21,11 @@ interface StreamInterface extends Stringable
     public const MEGABYTE = 1_048_576;
 
     /**
+     * @var int
+     */
+    public const READABLE_BYTES = 4096;
+
+    /**
      * Reads all data from the stream into a string, from the beginning to end.
      *
      * This method MUST attempt to seek to the beginning of the stream before reading data and read the stream until the
