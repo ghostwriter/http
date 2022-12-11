@@ -10,8 +10,10 @@ use Ghostwriter\Http\Message\Response;
 
 final class ResponseFactory implements ResponseFactoryInterface
 {
-    public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
-    {
+    public function createResponse(
+        int $code = self::HTTP_200_OK,
+        string $reasonPhrase = self::HTTP_REASON_PHRASE[self::HTTP_200_OK]
+    ): ResponseInterface {
         return (new Response())->withStatus($code, $reasonPhrase);
     }
 }
