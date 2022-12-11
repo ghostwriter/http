@@ -66,36 +66,77 @@ use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use PhpCsFixer\Fixer\Strict\StrictComparisonFixer;
 use PhpCsFixer\Fixer\Strict\StrictParamFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
-use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return static function (ECSConfig $ecsConfig): void {
+    $ecsConfig->cacheDirectory(__DIR__ . '/.cache/ecs');
     $ecsConfig->parallel();
-    $ecsConfig->paths([__DIR__ . '/ecs.php', __DIR__ . '/rector.php', __DIR__ . '/src', __DIR__ . '/tests']);
-
-    $ecsConfig->skip([
-        '*/tests/Fixture/*',
-        '*/vendor/*',
-        GroupImportFixer::class,
-        BinaryOperatorSpacesFixer::class,
-        GeneralPhpdocAnnotationRemoveFixer::class,
-        PhpdocLineSpanFixer::class,
-        PhpdocTrimFixer::class,
+    $ecsConfig->paths([__DIR__ . '/ecs.php', __DIR__ . '/rector.php', __DIR__ . '/src/', __DIR__ . '/tests']);
+    $ecsConfig->sets([
+        SetList::ARRAY,
+        SetList::CLEAN_CODE,
+        SetList::COMMON,
+        SetList::CONTROL_STRUCTURES,
+        SetList::NAMESPACES,
+        SetList::PSR_12,
+        SetList::DOCBLOCK,
+        SetList::PHPUNIT,
+        SetList::SPACES,
+        SetList::STRICT,
+        SetList::SYMPLIFY,
     ]);
-    $ecsConfig->import(SetList::ARRAY);
-    $ecsConfig->import(SetList::CLEAN_CODE);
-    $ecsConfig->import(SetList::COMMON);
-    $ecsConfig->import(SetList::CONTROL_STRUCTURES);
-    $ecsConfig->import(SetList::NAMESPACES);
-    $ecsConfig->import(SetList::PSR_12);
-    $ecsConfig->import(SetList::DOCBLOCK);
-    $ecsConfig->import(SetList::PHPUNIT);
-    $ecsConfig->import(SetList::SPACES);
-    $ecsConfig->import(SetList::STRICT);
-    $ecsConfig->import(SetList::SYMPLIFY);
-
-    $parameters = $ecsConfig->parameters();
-    $parameters->set(Option::CACHE_DIRECTORY, __DIR__ . '/.cache/ecs');
+    $ecsConfig->rules([
+        LowercaseKeywordsFixer::class,
+        LowercaseStaticReferenceFixer::class,
+        MagicConstantCasingFixer::class,
+        MagicMethodCasingFixer::class,
+        FinalClassFixer::class,
+        ProtectedToPrivateFixer::class,
+        SelfAccessorFixer::class,
+        SelfStaticAccessorFixer::class,
+        SingleClassElementPerStatementFixer::class,
+        VisibilityRequiredFixer::class,
+        ElseifFixer::class,
+        NoSuperfluousElseifFixer::class,
+        SimplifiedIfReturnFixer::class,
+        YodaStyleFixer::class,
+        ReturnTypeDeclarationFixer::class,
+        StaticLambdaFixer::class,
+        UseArrowFunctionsFixer::class,
+        FullyQualifiedStrictTypesFixer::class,
+        NoLeadingImportSlashFixer::class,
+        NoUnusedImportsFixer::class,
+        SingleImportPerStatementFixer::class,
+        GetClassToClassKeywordFixer::class,
+        NoHomoglyphNamesFixer::class,
+        PhpdocAnnotationWithoutDotFixer::class,
+        PhpdocOrderFixer::class,
+        PhpdocSeparationFixer::class,
+        PhpdocSummaryFixer::class,
+        PhpdocTypesOrderFixer::class,
+        PhpUnitConstructFixer::class,
+        PhpUnitDedicateAssertFixer::class,
+        PhpUnitDedicateAssertInternalTypeFixer::class,
+        PhpUnitExpectationFixer::class,
+        PhpUnitFqcnAnnotationFixer::class,
+        PhpUnitInternalClassFixer::class,
+        PhpUnitMethodCasingFixer::class,
+        PhpUnitMockFixer::class,
+        PhpUnitMockShortWillReturnFixer::class,
+        PhpUnitNamespacedFixer::class,
+        PhpUnitNoExpectationAnnotationFixer::class,
+        PhpUnitSetUpTearDownVisibilityFixer::class,
+        PhpUnitSizeClassFixer::class,
+        PhpUnitStrictFixer::class,
+        PhpUnitTestAnnotationFixer::class,
+        PhpUnitTestClassRequiresCoversFixer::class,
+        NoEmptyStatementFixer::class,
+        NoSinglelineWhitespaceBeforeSemicolonsFixer::class,
+        SemicolonAfterInstructionFixer::class,
+        DeclareStrictTypesFixer::class,
+        StrictComparisonFixer::class,
+        StrictParamFixer::class,
+    ]);
 
     $ecsConfig->ruleWithConfiguration(GlobalNamespaceImportFixer::class, [
         'import_classes' => true,
@@ -124,54 +165,13 @@ return static function (ECSConfig $ecsConfig): void {
         'order' => 'alpha',
     ]);
 
-    $ecsConfig->rule(LowercaseKeywordsFixer::class);
-    $ecsConfig->rule(LowercaseStaticReferenceFixer::class);
-    $ecsConfig->rule(MagicConstantCasingFixer::class);
-    $ecsConfig->rule(MagicMethodCasingFixer::class);
-    $ecsConfig->rule(FinalClassFixer::class);
-    $ecsConfig->rule(ProtectedToPrivateFixer::class);
-    $ecsConfig->rule(SelfAccessorFixer::class);
-    $ecsConfig->rule(SelfStaticAccessorFixer::class);
-    $ecsConfig->rule(SingleClassElementPerStatementFixer::class);
-    $ecsConfig->rule(VisibilityRequiredFixer::class);
-    $ecsConfig->rule(ElseifFixer::class);
-    $ecsConfig->rule(NoSuperfluousElseifFixer::class);
-    $ecsConfig->rule(SimplifiedIfReturnFixer::class);
-    $ecsConfig->rule(YodaStyleFixer::class);
-    $ecsConfig->rule(ReturnTypeDeclarationFixer::class);
-    $ecsConfig->rule(StaticLambdaFixer::class);
-    $ecsConfig->rule(UseArrowFunctionsFixer::class);
-    $ecsConfig->rule(FullyQualifiedStrictTypesFixer::class);
-    $ecsConfig->rule(NoLeadingImportSlashFixer::class);
-    $ecsConfig->rule(NoUnusedImportsFixer::class);
-    $ecsConfig->rule(SingleImportPerStatementFixer::class);
-    $ecsConfig->rule(GetClassToClassKeywordFixer::class);
-    $ecsConfig->rule(NoHomoglyphNamesFixer::class);
-    $ecsConfig->rule(PhpdocAnnotationWithoutDotFixer::class);
-    $ecsConfig->rule(PhpdocOrderFixer::class);
-    $ecsConfig->rule(PhpdocSeparationFixer::class);
-    $ecsConfig->rule(PhpdocSummaryFixer::class);
-    $ecsConfig->rule(PhpdocTypesOrderFixer::class);
-    $ecsConfig->rule(PhpUnitConstructFixer::class);
-    $ecsConfig->rule(PhpUnitDedicateAssertFixer::class);
-    $ecsConfig->rule(PhpUnitDedicateAssertInternalTypeFixer::class);
-    $ecsConfig->rule(PhpUnitExpectationFixer::class);
-    $ecsConfig->rule(PhpUnitFqcnAnnotationFixer::class);
-    $ecsConfig->rule(PhpUnitInternalClassFixer::class);
-    $ecsConfig->rule(PhpUnitMethodCasingFixer::class);
-    $ecsConfig->rule(PhpUnitMockFixer::class);
-    $ecsConfig->rule(PhpUnitMockShortWillReturnFixer::class);
-    $ecsConfig->rule(PhpUnitNamespacedFixer::class);
-    $ecsConfig->rule(PhpUnitNoExpectationAnnotationFixer::class);
-    $ecsConfig->rule(PhpUnitSetUpTearDownVisibilityFixer::class);
-    $ecsConfig->rule(PhpUnitSizeClassFixer::class);
-    $ecsConfig->rule(PhpUnitStrictFixer::class);
-    $ecsConfig->rule(PhpUnitTestAnnotationFixer::class);
-    $ecsConfig->rule(PhpUnitTestClassRequiresCoversFixer::class);
-    $ecsConfig->rule(NoEmptyStatementFixer::class);
-    $ecsConfig->rule(NoSinglelineWhitespaceBeforeSemicolonsFixer::class);
-    $ecsConfig->rule(SemicolonAfterInstructionFixer::class);
-    $ecsConfig->rule(DeclareStrictTypesFixer::class);
-    $ecsConfig->rule(StrictComparisonFixer::class);
-    $ecsConfig->rule(StrictParamFixer::class);
+    $ecsConfig->skip([
+        '*/tests/Fixture/*',
+        '*/vendor/*',
+        GroupImportFixer::class,
+        BinaryOperatorSpacesFixer::class,
+        GeneralPhpdocAnnotationRemoveFixer::class,
+        PhpdocLineSpanFixer::class,
+        PhpdocTrimFixer::class,
+    ]);
 };
