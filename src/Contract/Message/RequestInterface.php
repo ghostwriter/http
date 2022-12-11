@@ -25,58 +25,8 @@ use InvalidArgumentException;
  * be implemented such that they retain the internal state of the current
  * message and return an instance that contains the changed state.
  */
-interface RequestInterface extends MessageInterface
+interface RequestInterface extends MessageInterface, RequestMethodInterface
 {
-    /**
-     * @var string
-     */
-    public const METHOD_CONNECT = 'CONNECT';
-
-    /**
-     * @var string
-     */
-    public const METHOD_DELETE  = 'DELETE';
-
-    /**
-     * @var string
-     */
-    public const METHOD_GET     = 'GET';
-
-    /**
-     * @var string
-     */
-    public const METHOD_HEAD    = 'HEAD';
-
-    /**
-     * @var string
-     */
-    public const METHOD_OPTIONS = 'OPTIONS';
-
-    /**
-     * @var string
-     */
-    public const METHOD_PATCH   = 'PATCH';
-
-    /**
-     * @var string
-     */
-    public const METHOD_POST    = 'POST';
-
-    /**
-     * @var string
-     */
-    public const METHOD_PURGE   = 'PURGE';
-
-    /**
-     * @var string
-     */
-    public const METHOD_PUT     = 'PUT';
-
-    /**
-     * @var string
-     */
-    public const METHOD_TRACE   = 'TRACE';
-
     /**
      * Retrieves the HTTP method of the request.
      *
