@@ -13,6 +13,7 @@ use Ghostwriter\Http\Contract\Client\ClientInterface;
 use Ghostwriter\Http\Contract\Client\Exception\ClientExceptionInterface;
 use Ghostwriter\Http\Contract\Client\Exception\NetworkExceptionInterface;
 use Ghostwriter\Http\Contract\Client\Exception\RequestExceptionInterface;
+use Ghostwriter\Http\Contract\Message\RequestMethodInterface;
 use Ghostwriter\Http\Factory\ResponseFactory;
 use Ghostwriter\Http\Message\Request;
 use PHPUnit\Framework\TestCase;
@@ -51,10 +52,7 @@ final class ClientTest extends TestCase
     }
 
     /**
-     * @covers \Ghostwriter\Http\Client\Exception\ClientException::__construct
-     * @covers \Ghostwriter\Http\Client\Exception\NetworkException::__construct
-     * @covers \Ghostwriter\Http\Client\Exception\RequestException::__construct
-     *
+     * @coversNothing
      * @dataProvider clientExceptions
      */
     public function testClientMayThrowMoreSpecificExceptionsProvidedTheyImplementClientExceptionInterface(
@@ -79,7 +77,7 @@ final class ClientTest extends TestCase
     }
 
     /**
-     * @covers \Ghostwriter\Http\Client\Exception\ClientException::__construct
+     * @coversNothing
      */
     public function testClientMustThrowAnInstanceOfClientExceptionInterfaceIfItIsUnableToSendTheHttpRequestAtAll(): void
     {
@@ -88,7 +86,7 @@ final class ClientTest extends TestCase
     }
 
     /**
-     * @covers \Ghostwriter\Http\Client\Exception\ClientException::__construct
+     * @coversNothing
      */
     public function testClientMustThrowAnInstanceOfClientExceptionInterfaceIfTheHttpResponseCouldNotBeParsedIntoAPsr7ResponseObject(): void
     {
@@ -110,7 +108,7 @@ final class ClientTest extends TestCase
     public function testClientMustThrowAnInstanceOfNetworkExceptionInterfaceIfTheRequestCannotBeSentDueToANetworkFailureOfAnyKindIncludingATimeout(): void
     {
         $this->expectException(NetworkExceptionInterface::class);
-        throw new NetworkException(new Request(Request::METHOD_GET), __METHOD__);
+        throw new NetworkException(new Request(RequestMethodInterface::METHOD_GET), __METHOD__);
     }
 
     /**
@@ -128,7 +126,7 @@ final class ClientTest extends TestCase
     {
         // missing a Host or Method
         $this->expectException(RequestExceptionInterface::class);
-        throw new RequestException(new Request(Request::METHOD_GET), __METHOD__);
+        throw new RequestException(new Request(RequestMethodInterface::METHOD_GET), __METHOD__);
     }
 
     /**
@@ -143,7 +141,7 @@ final class ClientTest extends TestCase
     public function testClientMustThrowAnInstanceOfRequestExceptionInterfaceIfARequestCannotBeSentBecauseTheRequestMessageIsNotAWellFormedHttpRequest(): void
     {
         $this->expectException(RequestExceptionInterface::class);
-        throw new RequestException(new Request(Request::METHOD_GET), __METHOD__);
+        throw new RequestException(new Request(RequestMethodInterface::METHOD_GET), __METHOD__);
     }
 
     /**
