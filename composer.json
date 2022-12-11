@@ -34,19 +34,35 @@
         }
     ],
     "require": {
-        "php": ">=8.0,<8.2",
-        "ext-curl": ">=7.38"
+        "php": ">=8.0,<8.3",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ghostwriter/json": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.26.14",
-        "phpbench/phpbench": "^1.2.5",
+        "infection/infection": "^0.26",
+        "mikey179/vfsstream": "^1.6",
+        "phpbench/phpbench": "^1.2",
+        "phpstan/extension-installer": "^1.2",
         "phpunit/phpunit": "^9.5",
-        "psalm/plugin-phpunit": "^0.17.0",
-        "rector/rector": "^0.14.0",
+        "psalm/plugin-phpunit": "^0.18",
+        "psr/cache": "*",
+        "psr/container": "*",
+        "psr/event-dispatcher": "*",
+        "psr/http-client": "*",
+        "psr/http-factory": "*",
+        "psr/http-message": "*",
+        "psr/http-server-handler": "*",
+        "psr/http-server-middleware": "*",
+        "psr/link": "*",
+        "psr/log": "*",
+        "psr/simple-cache": "*",
+        "rector/rector": "^0.14",
         "symplify/easy-coding-standard": "^11.1",
-        "vimeo/psalm": "^4.26"
+        "vimeo/psalm": "^5.1"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
@@ -60,7 +76,8 @@
     },
     "config": {
         "allow-plugins": {
-            "infection/extension-installer": true
+            "infection/extension-installer": true,
+            "phpstan/extension-installer": true
         },
         "classmap-authoritative": true,
         "discard-changes": true,
