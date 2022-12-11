@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Message\Exception;
 
 use Ghostwriter\Http\Contract\Message\Exception\MessageExceptionInterface;
+use Throwable;
 
 final class InvalidArgumentException extends \InvalidArgumentException implements MessageExceptionInterface
 {
+    public static function invalidStreamTargetProvided(Throwable $throwable): self
+    {
+        return new self(sprintf('Invalid stream target provided: %s', $throwable->getMessage()));
+    }
+
     public static function invalidFragment(string $fragment): self
     {
         return new self(sprintf('Invalid fragment: "%s".', $fragment));
