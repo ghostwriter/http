@@ -72,6 +72,8 @@ final class Client implements ClientInterface
     /**
      * Sends the given requests and returns responses in the same order.
      *
+     * @param array<array-key, RequestInterface> $requests
+     *
      * @throws NetworkException
      * @throws ClientException
      *
@@ -184,7 +186,6 @@ final class Client implements ClientInterface
     private function populateResponseWithHeaderFields(ResponseInterface $response, string $header): ResponseInterface
     {
         $fields = explode("\r\n", $header);
-
         foreach ($fields as $i => $field) {
             // The first line of a response message is the status-line, consisting
             // of the protocol version, a space (SP), the status code, another
