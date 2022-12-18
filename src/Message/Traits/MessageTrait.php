@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Message\Traits;
 
-use Ghostwriter\Http\Contract\Message\MessageInterface;
 use Ghostwriter\Http\Contract\Message\StreamInterface;
 use function implode;
 use function strtr;
@@ -14,10 +13,18 @@ use function strtr;
  */
 trait MessageTrait
 {
-    /** @var array<string,string> Map of lowercase header name => original name at registration */
+    /**
+     * Map of lowercase header name => original name at registration.
+     *
+     * @var array<string,string>
+     */
     private array $headerNames = [];
 
-    /** @var array<string,array<array-key,string>> Map of all registered headers, as original name => array of values */
+    /**
+     * Map of all registered headers, as original name => array of values.
+     *
+     * @var array<string,array<array-key,string>>
+     */
     private array $headers = [];
 
     private string $protocol = '1.1';
@@ -30,7 +37,7 @@ trait MessageTrait
     }
 
     /**
-     * @return string[]
+     * @return array<array-key,string>
      */
     public function getHeader(string $name): array
     {
@@ -51,7 +58,7 @@ trait MessageTrait
     }
 
     /**
-     * @return mixed[][]|string[]
+     * @return array<string,array<array-key,string>>
      */
     public function getHeaders(): array
     {
@@ -69,22 +76,22 @@ trait MessageTrait
     }
 
     /**
-     * @param mixed[]|string $value
+     * @param array<string,string>|string $value
      */
-    public function withAddedHeader(string $name, array|string $value): MessageInterface
+    public function withAddedHeader(string $name, array|string $value): self
     {
         return $this;
     }
 
-    public function withBody(StreamInterface $stream): MessageInterface
+    public function withBody(StreamInterface $stream): self
     {
         return $this;
     }
 
     /**
-     * @param mixed[]|string $value
+     * @param array<array-key,string>|string $value
      */
-    public function withHeader(string $name, array|string $value): MessageInterface
+    public function withHeader(string $name, array|string $value): self
     {
         $copy = clone $this;
         $copy->headers[$name] = $value;
@@ -92,7 +99,7 @@ trait MessageTrait
         return $copy;
     }
 
-    public function withoutHeader(string $name): MessageInterface
+    public function withoutHeader(string $name): self
     {
         $copy = clone $this;
         unset($copy->headers[$name]);
@@ -100,7 +107,7 @@ trait MessageTrait
         return $copy;
     }
 
-    public function withProtocolVersion(string $version): MessageInterface
+    public function withProtocolVersion(string $version): self
     {
         if ($this->protocol === $version) {
             return $this;
