@@ -14,7 +14,6 @@ use Ghostwriter\Http\Message\Exception\UnableToReadFromStreamException;
 use Ghostwriter\Http\Message\Exception\UnableToSeekInStreamException;
 use Ghostwriter\Http\Message\Exception\UnableToWriteToStreamException;
 use RuntimeException;
-use Throwable;
 use const SEEK_CUR;
 use const SEEK_END;
 use const SEEK_SET;
@@ -34,6 +33,10 @@ use function stream_get_meta_data;
 
 final class Stream implements StreamInterface
 {
+    public const FD_MEMORY = 'php://memory';
+
+    public const FD_TEMP = 'php://temp';
+
     /**
      * SEEK_CUR - Set position to current location plus offset.
      *
@@ -55,16 +58,16 @@ final class Stream implements StreamInterface
      */
     public const SEEK_SET = SEEK_SET;
 
-    private bool $readable = false;
+    private bool $readable;
 
     /**
      * @var null|resource
      */
     private $resource;
 
-    private bool $seekable = false;
+    private bool $seekable;
 
-    private bool $writable = false;
+    private bool $writable;
 
     /**
      * cursor position, contents.
@@ -72,21 +75,14 @@ final class Stream implements StreamInterface
      * @param resource|StreamInterface|string $stream the stream resource cursor
      * @param string                          $mode   Mode with which to open stream
      */
-    public function __construct(mixed $stream = 'php://memory', string $mode = 'r+b')
+    public function __construct(mixed $stream = self::FD_TEMP, string $mode = 'r+b')
     {
-        $resource = $stream instanceof StreamInterface ? $stream->detach() : $stream;
-
-        if (is_string($stream)) {
-            try {
-                $resource = fopen($stream, $mode);
-            } catch (Throwable $throwable) {
-                throw InvalidArgumentException::invalidStreamTargetProvided($throwable);
-            }
-        }
-
-        if (false === $resource) {
-            throw new StreamIsInAnUnusableStateException();
-        }
+        /** @var false|resource $resource */
+        $resource = match (true) {
+            is_resource($stream) => $stream,
+            is_string($stream) => fopen($stream, $mode),
+            $stream instanceof StreamInterface => $stream->detach(),
+        };
 
         $this->validateResource($resource);
 
@@ -168,21 +164,11 @@ final class Stream implements StreamInterface
         return feof($this->resource);
     }
 
-    public static function fromResourceUri(string $resourceUri, string $mode = 'r+b'): self
-    {
-        $resource = fopen($resourceUri, $mode);
-        if (false === $resource) {
-            throw InvalidArgumentException::invalidStreamResourceUri($resourceUri);
-        }
-        return new self($resource);
-    }
-
     public static function fromString(string $string): self
     {
-        $resourceUri = 'php://temp';
-        $resource = fopen($resourceUri, 'w+b');
+        $resource = fopen(self::FD_TEMP, 'w+b');
         if (false === $resource) {
-            throw InvalidArgumentException::invalidStreamResourceUri($resourceUri);
+            throw InvalidArgumentException::invalidStreamResourceUri(self::FD_TEMP);
         }
 
         fwrite($resource, $string);
@@ -193,7 +179,7 @@ final class Stream implements StreamInterface
     {
         $this->streamIsUsable();
 
-        if (! $this->readable) {
+        if (false === $this->readable) {
             throw new StreamIsNotReadableException();
         }
 
@@ -224,11 +210,11 @@ final class Stream implements StreamInterface
         }
 
         $stats = fstat($this->resource);
-        if (false !== $stats) {
-            return $stats['size'];
+        if (false === $stats) {
+            return null;
         }
 
-        return null;
+        return $stats['size'];
     }
 
     /**
@@ -268,7 +254,7 @@ final class Stream implements StreamInterface
     {
         $this->streamIsUsable();
 
-        if (! $this->readable) {
+        if (false === $this->readable) {
             throw new StreamIsNotReadableException();
         }
 
@@ -297,24 +283,12 @@ final class Stream implements StreamInterface
     {
         $this->streamIsUsable();
 
-        if (! $this->seekable) {
+        if (false === $this->seekable) {
             throw new StreamIsNotSeekableException();
         }
 
         if (-1 === fseek($this->resource, $offset, $whence)) {
             throw new UnableToSeekInStreamException();
-        }
-    }
-
-    /**
-     * @psalm-assert !null $this->resource
-     *
-     * @throws StreamIsInAnUnusableStateException
-     */
-    public function streamIsUsable(): void
-    {
-        if (null === $this->resource) {
-            throw new StreamIsInAnUnusableStateException();
         }
     }
 
@@ -349,7 +323,7 @@ final class Stream implements StreamInterface
     {
         $this->streamIsUsable();
 
-        if (! $this->writable) {
+        if (false === $this->writable) {
             throw new StreamIsNotWritableException();
         }
 
@@ -359,6 +333,18 @@ final class Stream implements StreamInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @psalm-assert resource $this->resource
+     *
+     * @throws StreamIsInAnUnusableStateException
+     */
+    private function streamIsUsable(): void
+    {
+        if (null === $this->resource) {
+            throw new StreamIsInAnUnusableStateException();
+        }
     }
 
     /**
