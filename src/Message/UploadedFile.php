@@ -9,10 +9,7 @@ use Ghostwriter\Http\Contract\Message\UploadedFileInterface;
 use InvalidArgumentException;
 use RuntimeException;
 use const UPLOAD_ERR_OK;
-use function error_get_last;
-use function fopen;
 use function in_array;
-use function sprintf;
 
 final class UploadedFile implements UploadedFileInterface
 {
@@ -48,7 +45,7 @@ final class UploadedFile implements UploadedFileInterface
     public static function create(array $upload): UploadedFileInterface
     {
         return new self(
-            Stream::fromResourceUri($upload['full_path']),
+            new Stream($upload['full_path']),
             $upload['size'],
             $upload['error'],
             $upload['name'],
@@ -92,24 +89,19 @@ final class UploadedFile implements UploadedFileInterface
             $stream->seek(0);
         }
 
-        $resource = @fopen($targetPath, 'wb');
-        if (false === $resource) {
-            throw new RuntimeException(sprintf(
-                'The file "%s" cannot be opened: %s',
-                $targetPath,
-                error_get_last()['message'] ?? ''
-            ));
-        }
-
-        $destination = Stream::create($resource);
-
+        $destination = new Stream($targetPath, 'wb');
         while (! $stream->eof()) {
             if (0 === $destination->write($stream->read(StreamInterface::MEGABYTE))) {
                 break;
             }
         }
 
+        /** @var null|string $streamUri */
         $streamUri = $stream->getMetadata('uri');
+        if (null === $streamUri) {
+            return;
+        }
+
         if (is_file($streamUri)) {
             unlink($streamUri);
         }
