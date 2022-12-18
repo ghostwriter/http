@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Tests\Unit\Message;
 
+use Ghostwriter\Http\Contract\Message\StreamInterface;
 use Ghostwriter\Http\Contract\Message\UploadedFileInterface;
 use Ghostwriter\Http\Message\Stream;
 use Ghostwriter\Http\Message\UploadedFile;
@@ -18,7 +19,6 @@ use PHPUnit\Framework\TestCase;
  */
 final class UploadedFileTest extends TestCase
 {
-    public const PHP_TEMP = 'php://temp';
     public const BLACK_LIVES_MATTER = '#BlackLivesMatter';
 
     /**
@@ -39,14 +39,13 @@ final class UploadedFileTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::fromResourceUri
      * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\UploadedFile::__construct
      * @covers \Ghostwriter\Http\Message\UploadedFile::getStream
      */
     public function testUploadedFile(): void
     {
-        $stream = Stream::fromResourceUri(self::PHP_TEMP, 'w+b');
+        $stream = new Stream(Stream::FD_MEMORY, 'w+b');
         $uploadFile = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
 
         self::assertSame($stream, $uploadFile->getStream());
@@ -59,25 +58,57 @@ final class UploadedFileTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
-     * @covers \Ghostwriter\Http\Message\Stream::fromResourceUri
-     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::getSize
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\UploadedFile::__construct
      * @covers \Ghostwriter\Http\Message\UploadedFile::getStream
      */
     public function testUploadedFileFromFile(): void
     {
-        $stream = Stream::fromResourceUri(tempnam(sys_get_temp_dir(), __FUNCTION__));
-        $uploadFile = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
+        $stream = new Stream(tempnam(sys_get_temp_dir(), __FUNCTION__));
+        $uploadFile = new UploadedFile($stream, $stream->getSize(), UPLOAD_ERR_OK);
         self::assertSame($stream, $uploadFile->getStream());
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::__toString
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::getContents
+     * @covers \Ghostwriter\Http\Message\Stream::rewind
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\UploadedFile::__construct
+     * @covers \Ghostwriter\Http\Message\UploadedFile::getStream
+     */
+    public function testUploadedFileGetStreamRetrieveAStreamRepresentingTheUploadedFile(): void
+    {
+        $stream = Stream::fromString(self::BLACK_LIVES_MATTER);
+        $uploadedFile = new UploadedFile($stream);
+
+        self::assertInstanceOf(UploadedFileInterface::class, $uploadedFile);
+        self::assertSame(self::BLACK_LIVES_MATTER, $stream->__toString());
+
+        $uploadedStream = $uploadedFile->getStream();
+        self::assertSame($stream, $uploadedStream);
+
+        self::assertInstanceOf(StreamInterface::class, $uploadedStream);
+        self::assertSame(self::BLACK_LIVES_MATTER, $uploadedStream->__toString());
+    }
+
+    public function testUploadedFileIsImmutable(): void
+    {
+        $this->expectNotToPerformAssertions();
+        // Todo: figure out what mutable field can be mutated for testing. UploadedFile
     }
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
      * @covers \Ghostwriter\Http\Message\Stream::create
      * @covers \Ghostwriter\Http\Message\Stream::eof
-     * @covers \Ghostwriter\Http\Message\Stream::fromResourceUri
      * @covers \Ghostwriter\Http\Message\Stream::fromString
      * @covers \Ghostwriter\Http\Message\Stream::getMetadata
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
@@ -107,7 +138,6 @@ final class UploadedFileTest extends TestCase
      * @covers \Ghostwriter\Http\Message\Stream::__construct
      * @covers \Ghostwriter\Http\Message\Stream::create
      * @covers \Ghostwriter\Http\Message\Stream::eof
-     * @covers \Ghostwriter\Http\Message\Stream::fromResourceUri
      * @covers \Ghostwriter\Http\Message\Stream::getMetadata
      * @covers \Ghostwriter\Http\Message\Stream::isSeekable
      * @covers \Ghostwriter\Http\Message\Stream::read
@@ -125,7 +155,7 @@ final class UploadedFileTest extends TestCase
         $originalFile = tempnam(sys_get_temp_dir(), __FUNCTION__ . 'ORG');
         file_put_contents($originalFile, $content);
 
-        $uploadFile = new UploadedFile(Stream::fromResourceUri($originalFile), mb_strlen($content), UPLOAD_ERR_OK);
+        $uploadFile = new UploadedFile(new Stream($originalFile), mb_strlen($content), UPLOAD_ERR_OK);
 
         $newFile = tempnam(sys_get_temp_dir(), __FUNCTION__ . 'NEW');
         self::assertEmpty(file_get_contents($newFile));
