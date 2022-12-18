@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Message\Exception;
 
 use Ghostwriter\Http\Contract\Message\Exception\MessageExceptionInterface;
-use Throwable;
 
 final class InvalidArgumentException extends \InvalidArgumentException implements MessageExceptionInterface
 {
@@ -67,11 +66,6 @@ final class InvalidArgumentException extends \InvalidArgumentException implement
     public static function invalidStreamResourceUri(string $resourceUri): self
     {
         return new self(sprintf('Invalid stream resource uri: "%s".', $resourceUri));
-    }
-
-    public static function invalidStreamTargetProvided(Throwable $throwable): self
-    {
-        return new self(sprintf('Invalid stream target provided: %s', $throwable->getMessage()));
     }
 
     public static function invalidUri(string $uri): self
