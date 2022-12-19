@@ -23,14 +23,12 @@ final class ResponseFactoryTest extends TestCase
      */
     public function testConstruct(): void
     {
-        self::assertInstanceOf(ResponseFactory::class, $this->createResponseFactory());
         self::assertInstanceOf(ResponseFactoryInterface::class, $this->createResponseFactory());
     }
 
     /**
      * @covers \Ghostwriter\Http\Factory\ResponseFactory::createResponse
      * @covers \Ghostwriter\Http\Message\Response::__construct
-     * @covers \Ghostwriter\Http\Message\Response::__clone
      * @covers \Ghostwriter\Http\Message\Response::getReasonPhrase
      * @covers \Ghostwriter\Http\Message\Response::getStatusCode
      * @covers \Ghostwriter\Http\Message\Response::withStatus
