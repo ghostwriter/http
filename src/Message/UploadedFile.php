@@ -9,10 +9,11 @@ use Ghostwriter\Http\Contract\Message\UploadedFileInterface;
 use InvalidArgumentException;
 use RuntimeException;
 use const UPLOAD_ERR_OK;
-use function in_array;
 
 final class UploadedFile implements UploadedFileInterface
 {
+    private bool $moved = false;
+
     public function __construct(
         private StreamInterface $stream,
         private ?int $size = null,
@@ -20,7 +21,7 @@ final class UploadedFile implements UploadedFileInterface
         private ?string $clientFilename = null,
         private ?string $clientMediaType = null
     ) {
-        if (! in_array($error, self::UPLOAD_ERROR_CODES, true)) {
+        if (! array_key_exists($error, self::UPLOAD_ERROR_CODES)) {
             throw new InvalidArgumentException(
                 'Invalid error status for UploadedFile; must be an UPLOAD_ERR_* constant'
             );
@@ -75,11 +76,15 @@ final class UploadedFile implements UploadedFileInterface
 
     public function getStream(): StreamInterface
     {
-        if (UPLOAD_ERR_OK !== $this->error) {
-            throw new RuntimeException('Cannot retrieve stream provided for UploadedFile due to upload error.');
-        }
-
-        return $this->stream;
+        return match (true) {
+            true === $this->moved => throw new RuntimeException(
+                'Cannot retrieve stream; no stream is available, UploadedFile was moved.'
+            ),
+            UPLOAD_ERR_OK !== $this->error => throw new RuntimeException(
+                'Cannot retrieve stream provided for UploadedFile due to upload error.'
+            ),
+            default => $this->stream,
+        };
     }
 
     public function moveTo(string $targetPath): void
@@ -95,6 +100,8 @@ final class UploadedFile implements UploadedFileInterface
                 break;
             }
         }
+
+        $this->moved = true;
 
         /** @var null|string $streamUri */
         $streamUri = $stream->getMetadata('uri');
