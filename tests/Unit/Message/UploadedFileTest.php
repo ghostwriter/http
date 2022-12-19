@@ -9,6 +9,7 @@ use Ghostwriter\Http\Contract\Message\UploadedFileInterface;
 use Ghostwriter\Http\Message\Stream;
 use Ghostwriter\Http\Message\UploadedFile;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \Ghostwriter\Http\Message\UploadedFile
@@ -70,6 +71,46 @@ final class UploadedFileTest extends TestCase
         $stream = new Stream(tempnam(sys_get_temp_dir(), __FUNCTION__));
         $uploadFile = new UploadedFile($stream, $stream->getSize(), UPLOAD_ERR_OK);
         self::assertSame($stream, $uploadFile->getStream());
+    }
+
+    /**
+     * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::__toString
+     * @covers \Ghostwriter\Http\Message\Stream::eof
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
+     * @covers \Ghostwriter\Http\Message\Stream::getContents
+     * @covers \Ghostwriter\Http\Message\Stream::getMetadata
+     * @covers \Ghostwriter\Http\Message\Stream::isSeekable
+     * @covers \Ghostwriter\Http\Message\Stream::read
+     * @covers \Ghostwriter\Http\Message\Stream::rewind
+     * @covers \Ghostwriter\Http\Message\Stream::seek
+     * @covers \Ghostwriter\Http\Message\Stream::streamIsUsable
+     * @covers \Ghostwriter\Http\Message\Stream::validateResource
+     * @covers \Ghostwriter\Http\Message\Stream::write
+     * @covers \Ghostwriter\Http\Message\UploadedFile::__construct
+     * @covers \Ghostwriter\Http\Message\UploadedFile::getStream
+     * @covers \Ghostwriter\Http\Message\UploadedFile::moveTo
+     */
+    public function testUploadedFileGetStreamMustRaiseAnExceptionIfTheMoveToMethodWasPreviouslyCalled(): void
+    {
+        $stream = Stream::fromString(self::BLACK_LIVES_MATTER);
+        $uploadedFile = new UploadedFile($stream);
+
+        self::assertSame($stream, $uploadedFile->getStream());
+
+        $file = tempnam(sys_get_temp_dir(), __FUNCTION__);
+        self::assertEmpty(file_get_contents($file));
+
+        $uploadedFile->moveTo($file);
+        self::assertSame(self::BLACK_LIVES_MATTER, file_get_contents($file));
+
+        self::assertInstanceOf(UploadedFileInterface::class, $uploadedFile);
+        self::assertSame(self::BLACK_LIVES_MATTER, $stream->__toString());
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot retrieve stream; no stream is available, UploadedFile was moved.');
+        $uploadedStream = $uploadedFile->getStream();
+        self::assertSame($stream, $uploadedStream);
     }
 
     /**
