@@ -24,17 +24,17 @@ use const UPLOAD_ERR_PARTIAL;
 interface UploadedFileInterface
 {
     /**
-     * @var int[]
+     * @var array<int,bool>
      */
     public const UPLOAD_ERROR_CODES = [
-        UPLOAD_ERR_OK,
-        UPLOAD_ERR_INI_SIZE,
-        UPLOAD_ERR_FORM_SIZE,
-        UPLOAD_ERR_PARTIAL,
-        UPLOAD_ERR_NO_FILE,
-        UPLOAD_ERR_NO_TMP_DIR,
-        UPLOAD_ERR_CANT_WRITE,
-        UPLOAD_ERR_EXTENSION,
+        UPLOAD_ERR_OK=>true,
+        UPLOAD_ERR_INI_SIZE=>true,
+        UPLOAD_ERR_FORM_SIZE=>true,
+        UPLOAD_ERR_PARTIAL=>true,
+        UPLOAD_ERR_NO_FILE=>true,
+        UPLOAD_ERR_NO_TMP_DIR=>true,
+        UPLOAD_ERR_CANT_WRITE=>true,
+        UPLOAD_ERR_EXTENSION=>true,
     ];
 
     /**
