@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Contract\Message;
 
+use Ghostwriter\Http\Message\Exception\InvalidArgumentException;
 use RuntimeException;
 use Stringable;
 
@@ -44,6 +45,15 @@ interface StreamInterface extends Stringable
      * Closes the stream and any underlying resources.
      */
     public function close(): void;
+
+    /**
+     * Creates a new Http Stream.
+     *
+     * @param resource|StreamInterface|string $resourceStreamOrString
+     *
+     * @throws InvalidArgumentException
+     */
+    public static function create(mixed $resourceStreamOrString): self;
 
     /**
      * Separates any underlying resources from the stream.
