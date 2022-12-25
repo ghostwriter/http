@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Http\Message\Traits;
 
+use Ghostwriter\Http\Contract\Message\RequestMethodInterface;
 use Ghostwriter\Http\Contract\Message\UriInterface;
 use InvalidArgumentException;
 use function preg_match;
@@ -15,13 +16,13 @@ trait RequestTrait
 {
     use MessageTrait;
 
-    private string $method;
+    //    private string $method = RequestMethodInterface::METHOD_GET;
+    //
+    //    private ?string $requestTarget = null;
+    //
+    //    private ?UriInterface $uri = null;
 
-    private ?string $requestTarget = null;
-
-    private ?UriInterface $uri = null;
-
-    public function __clone(): void
+    public function __clone()
     {
         if ($this->uri instanceof UriInterface) {
             $this->uri = clone $this->uri;
@@ -35,24 +36,7 @@ trait RequestTrait
 
     public function getRequestTarget(): string
     {
-        if (null !== $this->requestTarget) {
-            return $this->requestTarget;
-        }
-
-        $target = $this->uri->getPath();
-        if ('' === $target) {
-            $target = '/';
-        }
-
-        if ('' !== $this->uri->getQuery()) {
-            $target .= '?' . $this->uri->getQuery();
-        }
-
-        if ('' !== $this->uri->getFragment()) {
-            $target .= '#' . $this->uri->getFragment();
-        }
-
-        return $target;
+        return $this->requestTarget ??= $this->updateRequestTargetFromUri();
     }
 
     public function getUri(): UriInterface
@@ -108,9 +92,7 @@ trait RequestTrait
         }
 
         $port = $this->uri->getPort();
-        if (null !== $port) {
-            $host .= ':' . $port;
-        }
+        $host = null === $port ? '' : ':' . $port;
 
         if (array_key_exists('host', $this->headerNames)) {
             $header = $this->headerNames['host'];
@@ -124,5 +106,19 @@ trait RequestTrait
         $this->headers = [
             $header => [$host],
         ] + $this->headers;
+    }
+
+    private function updateRequestTargetFromUri(): string
+    {
+        $path = $this->uri->getPath();
+        $path = '' === $path ? '/' : $path;
+
+        $query = $this->uri->getQuery();
+        $query = '' === $query ? $query : '?' . $query;
+
+        $fragment = $this->uri->getFragment();
+        $fragment = '' === $fragment ? $fragment : '#' . $fragment;
+
+        return $path . $query . $fragment;
     }
 }
