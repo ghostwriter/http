@@ -10,7 +10,6 @@ use Rector\Config\RectorConfig;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector;
-use Rector\Php74\Rector\Property\TypedPropertyRector;
 use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Rector\Class_\ConstructClassMethodToSetUpTestCaseRector;
 use Rector\PHPUnit\Rector\Class_\RemoveDataProviderTestPrefixRector;
@@ -60,9 +59,9 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->importShortClasses();
     $rectorConfig->parallel();
     $rectorConfig->sets([
-        PHPUnitLevelSetList::UP_TO_PHPUNIT_100,
-        //        DowngradeLevelSetList::DOWN_TO_PHP_80,
-        //        DowngradeSetList::PHP_80,
+        // PHPUnitLevelSetList::UP_TO_PHPUNIT_100,
+        DowngradeLevelSetList::DOWN_TO_PHP_80,
+        DowngradeSetList::PHP_80,
         LevelSetList::UP_TO_PHP_81,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
@@ -71,7 +70,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::PRIVATIZATION,
         SetList::PSR_4,
         SetList::TYPE_DECLARATION,
-        SetList::TYPE_DECLARATION_STRICT,
         SetList::EARLY_RETURN,
         SetList::PHP_81,
     ]);
@@ -101,7 +99,6 @@ return static function (RectorConfig $rectorConfig): void {
     );
     // register single rule
     $rectorConfig->rules([
-        TypedPropertyRector::class,
         RestoreDefaultNullToNullableTypePropertyRector::class,
         AddSeeTestAnnotationRector::class,
         AssertCompareToSpecificMethodRector::class,
