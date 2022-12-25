@@ -41,6 +41,14 @@ final class ClientTest extends TestCase
         ];
     }
 
+    /**
+     * @covers \Ghostwriter\Http\Client\Client::__construct
+     */
+    public function testClientIsAnObjectImplementingClientInterface(): void
+    {
+        self::assertInstanceOf(ClientInterface::class, new Client(new ResponseFactory()));
+    }
+
     public function testClientMayChooseToAlterAReceivedHttpResponseBeforeReturningItToTheCallingLibrary(): void
     {
         $this->expectNotToPerformAssertions();
@@ -53,6 +61,7 @@ final class ClientTest extends TestCase
 
     /**
      * @coversNothing
+     *
      * @dataProvider clientExceptions
      */
     public function testClientMayThrowMoreSpecificExceptionsProvidedTheyImplementClientExceptionInterface(
