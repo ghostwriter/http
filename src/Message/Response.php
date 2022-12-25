@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Ghostwriter\Http\Message;
 
 use Ghostwriter\Http\Contract\Message\ResponseInterface;
+use Ghostwriter\Http\Message\Traits\ResponseTrait;
 
-final class Response extends AbstractMessage implements ResponseInterface
+final class Response implements ResponseInterface
 {
+    use ResponseTrait;
+
     private int $code;
 
     private string $reasonPhrase;
