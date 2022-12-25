@@ -6,22 +6,21 @@ namespace Ghostwriter\Http\Message;
 
 use Ghostwriter\Http\Contract\Message\ServerRequestInterface;
 use Ghostwriter\Http\Contract\Message\UriInterface;
-use function is_string;
+use Ghostwriter\Http\Message\Traits\RequestTrait;
 
-final class ServerRequest extends AbstractRequest implements ServerRequestInterface
+final class ServerRequest implements ServerRequestInterface
 {
-    protected UriInterface $uri;
+    use RequestTrait;
 
+    //    protected UriInterface $uri;
     public function __construct(
-        protected string $method,
+        //        protected
+        string $method,
         string|UriInterface $uri,
         protected array $serverParams = []
     ) {
-        if (is_string($uri)) {
-            $uri = new Uri($uri);
-        }
-
-        $this->uri = $uri;
+        $this->uri = $uri instanceof UriInterface ? $uri : new Uri($uri);
+        $this->method = $method;
     }
 
     public function getAttribute(string $name, mixed $default = null): mixed
