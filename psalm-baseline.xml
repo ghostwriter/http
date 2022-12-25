@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
-  <file src="src/Factory/StreamFactory.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_resource($resource)</code>
-    </DocblockTypeContradiction>
-  </file>
-  <file src="src/Message/AbstractRequest.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;requestTarget</code>
-    </MixedReturnStatement>
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
+  <file src="src/Client/Client.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$response</code>
+    </ArgumentTypeCoercion>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$response</code>
+      <code>$response</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="2">
+      <code>ResponseInterface</code>
+      <code>ResponseInterface</code>
+    </MoreSpecificReturnType>
   </file>
   <file src="src/Message/Request.php">
     <MismatchingDocblockParamType occurrences="1">
       <code>resource|StreamInterface|string</code>
     </MismatchingDocblockParamType>
+    <MismatchingDocblockPropertyType occurrences="1">
+      <code>resource|StreamInterface|string</code>
+    </MismatchingDocblockPropertyType>
   </file>
   <file src="src/Message/Response.php">
     <MissingConstructor occurrences="2">
@@ -24,10 +27,160 @@
       <code>$reasonPhrase</code>
     </MissingConstructor>
   </file>
+  <file src="src/Message/ServerRequest.php">
+    <UndefinedThisPropertyAssignment occurrences="2">
+      <code>$this-&gt;method</code>
+      <code>$this-&gt;uri</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="src/Message/Traits/MessageTrait.php">
+    <MixedArgument occurrences="2">
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="2">
+      <code>$copy-&gt;headers[$name]</code>
+      <code>$this-&gt;headers[$header]</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="1">
+      <code>$copy-&gt;headers[$name]</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;headers[$header]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="1">
+      <code>$header</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="4">
+      <code>StreamInterface</code>
+      <code>array&lt;array-key,string&gt;</code>
+      <code>array&lt;string,array&lt;array-key,string&gt;&gt;</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnTypeCoercion occurrences="1">
+      <code>array&lt;string,array&lt;array-key,string&gt;&gt;</code>
+    </MixedReturnTypeCoercion>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$value</code>
+    </MoreSpecificImplementedParamType>
+    <UndefinedPropertyAssignment occurrences="4">
+      <code>$copy-&gt;headers</code>
+      <code>$copy-&gt;headers</code>
+      <code>$copy-&gt;protocol</code>
+      <code>$copy-&gt;protocol</code>
+    </UndefinedPropertyAssignment>
+    <UndefinedPropertyFetch occurrences="4">
+      <code>$copy-&gt;headers</code>
+      <code>$copy-&gt;headers</code>
+      <code>$copy-&gt;headers</code>
+      <code>$copy-&gt;headers</code>
+    </UndefinedPropertyFetch>
+    <UndefinedThisPropertyFetch occurrences="16">
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headers</code>
+      <code>$this-&gt;headers</code>
+      <code>$this-&gt;headers</code>
+      <code>$this-&gt;headers</code>
+      <code>$this-&gt;protocol</code>
+      <code>$this-&gt;protocol</code>
+      <code>$this-&gt;protocol</code>
+      <code>$this-&gt;protocol</code>
+      <code>$this-&gt;stream</code>
+      <code>$this-&gt;stream</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="src/Message/Traits/RequestTrait.php">
+    <InvalidReturnType occurrences="1">
+      <code>UriInterface</code>
+    </InvalidReturnType>
+    <MixedArgument occurrences="2">
+      <code>$requestTarget</code>
+      <code>$this-&gt;headerNames</code>
+    </MixedArgument>
+    <MixedArrayOffset occurrences="1"/>
+    <MixedAssignment occurrences="7">
+      <code>$fragment</code>
+      <code>$header</code>
+      <code>$host</code>
+      <code>$path</code>
+      <code>$path</code>
+      <code>$port</code>
+      <code>$query</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>UriInterface</code>
+      <code>string</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="5">
+      <code>getFragment</code>
+      <code>getHost</code>
+      <code>getPath</code>
+      <code>getPort</code>
+      <code>getQuery</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="5">
+      <code>$fragment</code>
+      <code>$path</code>
+      <code>$port</code>
+      <code>$query</code>
+      <code>$this-&gt;headers</code>
+    </MixedOperand>
+    <PossiblyInvalidMethodCall occurrences="5">
+      <code>getFragment</code>
+      <code>getHost</code>
+      <code>getPath</code>
+      <code>getPort</code>
+      <code>getQuery</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference occurrences="5">
+      <code>getFragment</code>
+      <code>getHost</code>
+      <code>getPath</code>
+      <code>getPort</code>
+      <code>getQuery</code>
+    </PossiblyNullReference>
+    <UndefinedPropertyAssignment occurrences="4">
+      <code>$clone-&gt;method</code>
+      <code>$clone-&gt;uri</code>
+      <code>$new-&gt;requestTarget</code>
+      <code>$new-&gt;requestTarget</code>
+    </UndefinedPropertyAssignment>
+    <UndefinedThisPropertyAssignment occurrences="6">
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headers</code>
+      <code>$this-&gt;requestTarget</code>
+      <code>$this-&gt;requestTarget</code>
+      <code>$this-&gt;uri</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="10">
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headerNames</code>
+      <code>$this-&gt;headers</code>
+      <code>$this-&gt;method</code>
+      <code>$this-&gt;method</code>
+      <code>$this-&gt;uri</code>
+      <code>$this-&gt;uri</code>
+      <code>$this-&gt;uri</code>
+      <code>$this-&gt;uri</code>
+      <code>$this-&gt;uri</code>
+    </UndefinedThisPropertyFetch>
+  </file>
   <file src="src/Message/Uri.php">
     <UnusedPsalmSuppress occurrences="1">
       <code>MixedArgument</code>
     </UnusedPsalmSuppress>
+  </file>
+  <file src="tests/Unit/Message/StreamTest.php">
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>assertIsClosedResource</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="tests/Unit/Message/UriTest.php">
     <InvalidArgument occurrences="3">
@@ -45,50 +198,22 @@
     <MixedArgument occurrences="1">
       <code>$test</code>
     </MixedArgument>
-    <MixedAssignment occurrences="5">
-      <code>$new</code>
-      <code>$new</code>
-      <code>$new</code>
-      <code>$new</code>
+    <MixedAssignment occurrences="1">
       <code>$test</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="2">
       <code>iterable&lt;array{string, string}&gt;</code>
       <code>iterable&lt;string, array{string}&gt;</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="11">
-      <code>getQuery</code>
-      <code>getUserInfo</code>
-      <code>getUserInfo</code>
-      <code>getUserInfo</code>
-      <code>withPath</code>
-      <code>withPort</code>
-      <code>withQuery</code>
-      <code>withQuery</code>
-      <code>withUserInfo</code>
-      <code>withUserInfo</code>
-      <code>withUserInfo</code>
-    </MixedMethodCall>
-    <PossiblyInvalidArgument occurrences="3">
+    <PossiblyInvalidArgument occurrences="4">
       <code>test0Query</code>
+      <code>testFragment</code>
       <code>testFragment</code>
       <code>testPath</code>
     </PossiblyInvalidArgument>
     <PossiblyNullArgument occurrences="1">
       <code>$port</code>
     </PossiblyNullArgument>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;uri</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="7">
-      <code>$this-&gt;uri</code>
-      <code>$this-&gt;uri</code>
-      <code>$this-&gt;uri</code>
-      <code>$this-&gt;uri</code>
-      <code>$this-&gt;uri</code>
-      <code>$this-&gt;uri</code>
-      <code>$this-&gt;uri</code>
-    </UndefinedThisPropertyFetch>
     <UnusedPsalmSuppress occurrences="1">
       <code>MixedArgument</code>
     </UnusedPsalmSuppress>
