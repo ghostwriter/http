@@ -13,23 +13,23 @@ use function strtr;
  */
 trait MessageTrait
 {
-    /**
-     * Map of lowercase header name => original name at registration.
-     *
-     * @var array<string,string>
-     */
-    private array $headerNames = [];
-
-    /**
-     * Map of all registered headers, as original name => array of values.
-     *
-     * @var array<string,array<array-key,string>>
-     */
-    private array $headers = [];
-
-    private string $protocol = '1.1';
-
-    private StreamInterface $stream;
+    //    /**
+    //     * Map of lowercase header name => original name at registration.
+    //     *
+    //     * @var array<string,string>
+    //     */
+    //    private array $headerNames = [];
+    //
+    //    /**
+    //     * Map of all registered headers, as original name => array of values.
+    //     *
+    //     * @var array<string,array<array-key,string>>
+    //     */
+    //    private array $headers = [];
+    //
+    //    private string $protocol = '1.1';
+    //
+    //    private StreamInterface $stream;
 
     public function getBody(): StreamInterface
     {
