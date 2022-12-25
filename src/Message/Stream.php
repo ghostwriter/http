@@ -128,16 +128,16 @@ final class Stream implements StreamInterface
     /**
      * Creates a new Http Stream.
      *
-     * @param resource|StreamInterface|string $string
+     * @param resource|StreamInterface|string $resourceStreamOrString
      *
      * @throws InvalidArgumentException
      */
-    public static function create(mixed $string = ''): StreamInterface
+    public static function create(mixed $resourceStreamOrString): StreamInterface
     {
         return match (true) {
-            is_resource($string) => new self($string),
-            is_string($string) => self::fromString($string),
-            $string instanceof StreamInterface => $string,
+            is_resource($resourceStreamOrString) => new self($resourceStreamOrString),
+            is_string($resourceStreamOrString) => self::fromString($resourceStreamOrString),
+            $resourceStreamOrString instanceof StreamInterface => $resourceStreamOrString,
             default => throw InvalidArgumentException::invalidStreamCreateArgument()
         };
     }
