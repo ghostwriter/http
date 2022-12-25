@@ -40,21 +40,16 @@ final class UploadedFileTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Message\Stream::__construct
+     * @covers \Ghostwriter\Http\Message\Stream::fromString
      * @covers \Ghostwriter\Http\Message\Stream::validateResource
      * @covers \Ghostwriter\Http\Message\UploadedFile::__construct
-     * @covers \Ghostwriter\Http\Message\UploadedFile::getStream
      */
     public function testUploadedFile(): void
     {
-        $stream = new Stream(Stream::FD_MEMORY, 'w+b');
-        $uploadFile = new UploadedFile($stream, 0, UPLOAD_ERR_OK);
+        $stream = Stream::fromString(self::BLACK_LIVES_MATTER);
+        $uploadedFile = new UploadedFile($stream);
 
-        self::assertSame($stream, $uploadFile->getStream());
-    }
-
-    public function testUploadedFile2(): void
-    {
-        $this->expectNotToPerformAssertions();
+        self::assertInstanceOf(UploadedFileInterface::class, $uploadedFile);
     }
 
     /**
@@ -192,20 +187,23 @@ final class UploadedFileTest extends TestCase
      */
     public function testUploadedFileMoveToRemovesOriginalFile(): void
     {
-        $content = '#BlackLivesMatter';
         $originalFile = tempnam(sys_get_temp_dir(), __FUNCTION__ . 'ORG');
-        file_put_contents($originalFile, $content);
+        file_put_contents($originalFile, self::BLACK_LIVES_MATTER);
 
-        $uploadFile = new UploadedFile(new Stream($originalFile), mb_strlen($content), UPLOAD_ERR_OK);
-
+        $uploadFile = new UploadedFile(
+            new Stream($originalFile),
+            mb_strlen(self::BLACK_LIVES_MATTER),
+            UPLOAD_ERR_OK
+        );
         $newFile = tempnam(sys_get_temp_dir(), __FUNCTION__ . 'NEW');
         self::assertEmpty(file_get_contents($newFile));
 
         self::assertFileExists($originalFile);
         $uploadFile->moveTo($newFile);
+
         self::assertFileExists($newFile);
         self::assertFileDoesNotExist($originalFile);
-        self::assertSame($content, file_get_contents($newFile));
+        self::assertSame(self::BLACK_LIVES_MATTER, file_get_contents($newFile));
     }
     //
     //When the HTTP method is not POST.
