@@ -28,7 +28,6 @@ final class ResponseFactoryTest extends TestCase
 
     /**
      * @covers \Ghostwriter\Http\Factory\ResponseFactory::createResponse
-     * @covers \Ghostwriter\Http\Message\Response::__construct
      * @covers \Ghostwriter\Http\Message\Response::getReasonPhrase
      * @covers \Ghostwriter\Http\Message\Response::getStatusCode
      * @covers \Ghostwriter\Http\Message\Response::withStatus
