@@ -20,5 +20,9 @@ final class Parser
     public function parse(string $document): Generator
     {
         yield from $this->lexer->lex($document);
+//        $nodes = $this->lexer->lex($document);
+//        foreach ($nodes as $offset => $node) {
+//            yield $offset => $node;
+//        }
     }
 }
