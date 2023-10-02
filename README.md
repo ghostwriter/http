@@ -1,19 +1,19 @@
 # HTTP
 
-[![Compliance](https://github.com/ghostwriter/http/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/continuous-integration.yml)
+[![Compliance](https://github.com/ghostwriter/http/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/compliance.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/http?color=8892bf)](https://www.php.net/supported-versions)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/http&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
+[![Code Coverage](https://codecov.io/gh/ghostwriter/http/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/http)
 [![Type Coverage](https://shepherd.dev/github/ghostwriter/http/coverage.svg)](https://shepherd.dev/github/ghostwriter/http)
 [![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/http)](https://packagist.org/packages/ghostwriter/http)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/http?color=blue)](https://packagist.org/packages/ghostwriter/http)
 
-HTTP Client and Server abstraction for PHP inspired by [PSR-7](https://www.php-fig.org/psr/psr-7/),
-[PSR-15](https://www.php-fig.org/psr/psr-15/), [PSR-17](https://www.php-fig.org/psr/psr-17/)
-and [PSR-18](https://www.php-fig.org/psr/psr-18/) specification.
+HTTP Client and Server abstraction for PHP.
 
 > **Warning**
-> 
+>
 > This project is not finished yet, work in progress.
- 
+
 ## Installation
 
 You can install the package via composer:
@@ -25,43 +25,53 @@ composer require ghostwriter/http
 ## Usage
 
 ```php
-// work in progress
+
+$router = new Router();
+
+$router->addRoute('GET', '/', HomeHandler::class, [GuestMiddleware::class]);
+
+$router->get('/about', AboutHandler::class, [GuestMiddleware::class]);
+
+$router->get('/auth/github', GitHubLoginHandler::class, [GuestMiddleware::class], 'auth.login.github');
+
+    // create, read, edit, update, store, delete, view, show 
+$router->middleware([GuestMiddleware::class], function($router){
+    $router->get('/auth/login', LoginCreateHandler::class, 'auth.login.create');
+    $router->post('/auth/login', LoginStoreHandler::class, 'auth.login.store');
+
+    $router->get('/auth/register', RegisterCreateHandler::class, 'auth.register.create');
+    $router->post('/auth/register', RegisterStoreHandler::class, 'auth.register.store');
+
+    $router->get('/posts', PostIndexHandler::class, 'members.index');
+    $router->get('/posts/{post:id}', PostShowHandler::class, 'members.show');
+});
+
+$router->middleware([AuthMiddleware::class], function($router){
+    $router->get('/users', MembersIndexHandler::class, 'members.index');
+    $router->get('/users/{member:id}', MemberShowHandler::class, 'members.show');
+
+    $router->get('/posts/create', PostCreateHandler::class, 'members.create');
+    $router->post('/posts', PostStoreHandler::class, 'members.store');
+    $router->get('/posts/{post:id}/edit', PostEditHandler::class, 'members.edit');
+    $router->put('/posts/{post:id}', PostUpdateHandler::class, 'members.update');
+    $router->delete('/posts/{post:id}', PostDeleteHandler::class, 'members.delete');
+});
+
+$request = new ServerRequest();
+
+$server = new Server($router); // RequestHandler
+
+$server->handle($request); // Response
+
 ```
 
-## Testing
-
-``` bash
-composer test
-```
-
-## Changelog
+### Changelog
 
 Please see [CHANGELOG.md](./CHANGELOG.md) for more information what has changed recently.
 
-## Security
+### Security
 
-If you discover any security related issues, please email `nathanael.esayeas@protonmail.com` instead of using the issue tracker.
-
-## Sponsors
-
-[![ghostwriter's GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsors&logo=GitHub%20Sponsors)](https://github.com/sponsors/ghostwriter)
-
-Maintaining open source software is a thankless, time-consuming job.
-
-Sponsorships are one of the best ways to contribute to the long-term sustainability of an open-source licensed project.
-
-Please consider giving back, to fund the continued development of `ghostwriter/http`, by sponsoring me here on GitHub.
-
-[[Become a GitHub Sponsor](https://github.com/sponsors/ghostwriter)]
-
-### For Developers
-
-Please consider helping your company become a GitHub Sponsor, to support the open-source licensed project that runs your business.
-
-## Credits
-
-- [Nathanael Esayeas](https://github.com/ghostwriter)
-- [All Contributors](https://github.com/ghostwriter/http/contributors)
+If you discover any security related issues, please email `nathanael.esayeas@protonmail.com` or create a [Security Advisory](https://github.com/ghostwriter/clock/security/advisories/new) instead of using the issue tracker.
 
 ## License
 
