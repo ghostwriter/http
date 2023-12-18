@@ -34,7 +34,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ghostwriter/clock": "^1.1",
+        "ghostwriter/clock": "^1.1 || ^2.0",
         "ghostwriter/collection": "^1.4",
         "ghostwriter/json": "^1.2"
     },
