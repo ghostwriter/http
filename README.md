@@ -1,11 +1,8 @@
 # HTTP
 
-[![Compliance](https://github.com/ghostwriter/http/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/compliance.yml)
+[![Automation](https://github.com/ghostwriter/http/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/http/actions/workflows/automation.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/http?color=8892bf)](https://www.php.net/supported-versions)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/ghostwriter?label=Sponsor+@ghostwriter/http&logo=GitHub+Sponsors)](https://github.com/sponsors/ghostwriter)
-[![Code Coverage](https://codecov.io/gh/ghostwriter/http/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/http)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/http/coverage.svg)](https://shepherd.dev/github/ghostwriter/http)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/http)](https://packagist.org/packages/ghostwriter/http)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/http?color=blue)](https://packagist.org/packages/ghostwriter/http)
 
 HTTP Client and Server abstraction for PHP.
