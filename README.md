@@ -19,11 +19,21 @@ You can install the package via composer:
 composer require ghostwriter/http
 ```
 
+## RFC
+
+- [RFC3864: Registration Procedures for Message Header Fields](https://datatracker.ietf.org/doc/html/rfc3864)
+- [RFC5234: Augmented BNF for Syntax Specifications](https://datatracker.ietf.org/doc/html/rfc5234)
+- [RFC9110: HTTP Semantics](https://datatracker.ietf.org/doc/html/rfc9110)
+- [RFC9111: HTTP Caching](https://datatracker.ietf.org/doc/html/rfc9111)
+- [RFC9112: HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc9112)
+- [RFC9113: HTTP/2](https://datatracker.ietf.org/doc/html/rfc9113)
+- [RFC9114: HTTP/3](https://datatracker.ietf.org/doc/html/rfc9114)
+
 ## Usage
 
 ```php
 
-$router = new Router();
+$router =  Router::new();
 
 $router->addRoute('GET', '/', HomeHandler::class, [GuestMiddleware::class]);
 
@@ -40,23 +50,23 @@ $router->middleware([GuestMiddleware::class], function($router){
     $router->post('/auth/register', RegisterStoreHandler::class, 'auth.register.store');
 
     $router->get('/posts', PostIndexHandler::class, 'members.index');
-    $router->get('/posts/{post:id}', PostShowHandler::class, 'members.show');
+    $router->get('/posts/{post}/{?slug}', PostShowHandler::class, 'members.show');
 });
 
 $router->middleware([AuthMiddleware::class], function($router){
     $router->get('/users', MembersIndexHandler::class, 'members.index');
-    $router->get('/users/{member:id}', MemberShowHandler::class, 'members.show');
+    $router->get('/users/{member}', MemberShowHandler::class, 'members.show');
 
     $router->get('/posts/create', PostCreateHandler::class, 'members.create');
     $router->post('/posts', PostStoreHandler::class, 'members.store');
-    $router->get('/posts/{post:id}/edit', PostEditHandler::class, 'members.edit');
-    $router->put('/posts/{post:id}', PostUpdateHandler::class, 'members.update');
-    $router->delete('/posts/{post:id}', PostDeleteHandler::class, 'members.delete');
+    $router->get('/posts/{post}/edit', PostEditHandler::class, 'members.edit');
+    $router->put('/posts/{post}', PostUpdateHandler::class, 'members.update');
+    $router->delete('/posts/{post}', PostDeleteHandler::class, 'members.delete');
 });
 
-$request = new ServerRequest();
+$request =  ServerRequest::new();
 
-$server = new Server($router); // RequestHandler
+$server =  Server::new($router); // RequestHandler
 
 $server->handle($request); // Response
 
