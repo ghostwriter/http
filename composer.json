@@ -51,7 +51,10 @@
         "psr-4": {
             "Ghostwriter\\HttpTests\\": "tests",
             "Tests\\": "tests"
-        }
+        },
+        "files": [
+            "tests/bootstrap.php"
+        ]
     },
     "config": {
         "allow-plugins": {
