@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b10edbed49d5617ad0cc408bf4218542",
+    "content-hash": "9659b44e402c4b5fd6c2f0e0e2388c64",
     "packages": [
         {
             "name": "fig/cache-util",
@@ -3002,12 +3002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "13fd1073fa6bb72971db5eac7cb1519744fb3fc2"
+                "reference": "4802b76f9b11f5d442f6d9b44c14f0f4c1564e90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/13fd1073fa6bb72971db5eac7cb1519744fb3fc2",
-                "reference": "13fd1073fa6bb72971db5eac7cb1519744fb3fc2",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/4802b76f9b11f5d442f6d9b44c14f0f4c1564e90",
+                "reference": "4802b76f9b11f5d442f6d9b44c14f0f4c1564e90",
                 "shasum": ""
             },
             "require": {
@@ -3051,10 +3051,12 @@
             },
             "require-dev": {
                 "ext-xdebug": "*",
-                "mockery/mockery": "~1.6.12",
+                "infection/infection": "^0.30.3",
+                "mockery/mockery": "^1.6.12",
                 "nikic/php-parser": "~5.4.0 || ~5.5.0",
-                "phpunit/phpunit": "~12.2.7",
-                "vimeo/psalm": "~6.12.1"
+                "phpunit/phpunit": "^12.2.7",
+                "symfony/var-dumper": "^7.3.1",
+                "vimeo/psalm": "^6.13.0"
             },
             "default-branch": true,
             "bin": [
@@ -3151,7 +3153,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-13T08:10:12+00:00"
+            "time": "2025-07-14T13:54:42+00:00"
         },
         {
             "name": "ghostwriter/filesystem",
