@@ -3,7 +3,6 @@
   "description": "[WIP] HTTP Client and Server abstraction for PHP"
   "homepage": "https://github.com/ghostwriter/http"
   "topics": "ghostwriter, http, php"
-  "private": false
   "has_issues": true
   "has_projects": false
   "has_wiki": false
