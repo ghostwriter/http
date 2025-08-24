@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26c8fe3a5b7aa440db4259ea9d8d6b71",
+    "content-hash": "d696c31497e5a48c150488ed5db00fc4",
     "packages": [
         {
             "name": "fig/cache-util",
