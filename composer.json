@@ -80,6 +80,9 @@
         },
         "files": [
             "tests/bootstrap.php"
+        ],
+        "exclude-from-classmap": [
+            "/tests/"
         ]
     },
     "config": {
