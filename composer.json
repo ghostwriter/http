@@ -38,7 +38,7 @@
         "ext-mbstring": "*",
         "ghostwriter/clock": "^3.0.1",
         "ghostwriter/config": "^2.0.2",
-        "ghostwriter/container": "^6.0.1",
+        "ghostwriter/container": "^6.1.0",
         "ghostwriter/event-dispatcher": "^6.0.2",
         "ghostwriter/json": "^3.0.1",
         "guzzlehttp/guzzle": "^7.10.0",
