@@ -37,10 +37,10 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ghostwriter/clock": "^3.0.1",
-        "ghostwriter/config": "^2.0.2",
-        "ghostwriter/container": "^6.1.0",
-        "ghostwriter/event-dispatcher": "^6.0.2",
-        "ghostwriter/json": "^3.0.1",
+        "ghostwriter/config": "^2.1.1",
+        "ghostwriter/container": "^6.1.1",
+        "ghostwriter/event-dispatcher": "^6.1.0",
+        "ghostwriter/json": "^3.0.2",
         "guzzlehttp/guzzle": "^7.10.0",
         "laminas/laminas-diactoros": "^3.8.0",
         "psr/http-client": "^1.0.3",
@@ -93,7 +93,7 @@
     "extra": {
         "ghostwriter": {
             "container": {
-                "definition": "Ghostwriter\\Http\\Container\\HttpDefinition"
+                "provider": ["Ghostwriter\\Http\\Container\\HttpProvider"]
             }
         },
         "thanks": {
