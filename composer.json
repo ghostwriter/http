@@ -37,7 +37,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ghostwriter/clock": "^3.0.1",
-        "ghostwriter/config": "^2.1.1",
+        "ghostwriter/config": "^2.1.2",
         "ghostwriter/container": "^7.0.0",
         "ghostwriter/event-dispatcher": "^6.1.1",
         "ghostwriter/json": "^3.0.2",
