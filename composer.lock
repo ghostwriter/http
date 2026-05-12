@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72b44b38009ae8bba6a1598e9d4baab7",
+    "content-hash": "18eb6b1347da0af3f64ab331a7c8d39b",
     "packages": [
         {
             "name": "ghostwriter/clock",
@@ -380,22 +380,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.10.0",
+            "version": "7.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4"
+                "reference": "7b2f29fe81dc4da0ca0ea7d42107a0845946ea77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
-                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7b2f29fe81dc4da0ca0ea7d42107a0845946ea77",
+                "reference": "7b2f29fe81dc4da0ca0ea7d42107a0845946ea77",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^2.3",
-                "guzzlehttp/psr7": "^2.8",
+                "guzzlehttp/promises": "^1.5.3 || ^2.0.3",
+                "guzzlehttp/psr7": "^2.7.0",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -486,7 +486,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.10.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.9.3"
             },
             "funding": [
                 {
@@ -502,7 +502,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-23T22:36:01+00:00"
+            "time": "2025-03-27T13:37:11+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1287,16 +1287,16 @@
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.4.2",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "73b995dcec4d48da025ac4a0d94a25fa552f9f60"
+                "reference": "8147b85144f2c178522558cdaa39343c4e495745"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/73b995dcec4d48da025ac4a0d94a25fa552f9f60",
-                "reference": "73b995dcec4d48da025ac4a0d94a25fa552f9f60",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/8147b85144f2c178522558cdaa39343c4e495745",
+                "reference": "8147b85144f2c178522558cdaa39343c4e495745",
                 "shasum": ""
             },
             "require": {
@@ -1344,7 +1344,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.4.2"
+                "source": "https://github.com/boundwize/structarmed/tree/0.4.4"
             },
             "funding": [
                 {
@@ -1352,7 +1352,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-12T04:43:50+00:00"
+            "time": "2026-05-12T05:52:29+00:00"
         },
         {
             "name": "ghostwriter/coding-standard",
@@ -1360,16 +1360,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "4756ffed1266ffbb1e12983a8b5a85836167af81"
+                "reference": "4514ee3e9779bc076725921ce424a74276c3d4b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/4756ffed1266ffbb1e12983a8b5a85836167af81",
-                "reference": "4756ffed1266ffbb1e12983a8b5a85836167af81",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/4514ee3e9779bc076725921ce424a74276c3d4b6",
+                "reference": "4514ee3e9779bc076725921ce424a74276c3d4b6",
                 "shasum": ""
             },
             "require": {
-                "boundwize/structarmed": "^0.4.1",
+                "boundwize/structarmed": "^0.4.4",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -1480,7 +1480,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-11T23:57:46+00:00"
+            "time": "2026-05-12T07:00:38+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
