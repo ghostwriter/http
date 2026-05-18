@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd20fc83ca8fac2e9253e350cf782e48",
+    "content-hash": "40577b246d27b1d19fcdb55748d3e726",
     "packages": [
         {
             "name": "ghostwriter/clock",
