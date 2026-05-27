@@ -33,7 +33,7 @@
     "_comment": ["#BlackLivesMatter", "#FreePalestine", "#StandWithIran", "#StandWithUkraine", "#StopGenocide"],
     "require": {
         "php": "~8.4.0 || ~8.5.0",
-        "ghostwriter/container": "^7.0.1",
+        "ghostwriter/container": "^7.0.2",
         "guzzlehttp/guzzle": "^7.10.4",
         "laminas/laminas-diactoros": "^3.8.0",
         "psr/http-client": "^1.0.3",
