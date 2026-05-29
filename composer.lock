@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "413f7c06da888061d4227ae588fc931e",
+    "content-hash": "ed12717a46b57ba900545a81bad69985",
     "packages": [
         {
             "name": "ghostwriter/container",
@@ -299,16 +299,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.10.3",
+            "version": "2.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "7c1472269227dc6f18930bd903d7a88fe6c52130"
+                "reference": "d2a1a094e396da8957e797489fddaf860c340cfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7c1472269227dc6f18930bd903d7a88fe6c52130",
-                "reference": "7c1472269227dc6f18930bd903d7a88fe6c52130",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/d2a1a094e396da8957e797489fddaf860c340cfc",
+                "reference": "d2a1a094e396da8957e797489fddaf860c340cfc",
                 "shasum": ""
             },
             "require": {
@@ -396,7 +396,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.10.3"
+                "source": "https://github.com/guzzle/psr7/tree/2.10.4"
             },
             "funding": [
                 {
@@ -412,7 +412,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-27T11:48:20+00:00"
+            "time": "2026-05-29T12:59:07+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -834,16 +834,16 @@
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.8.7",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "dc9909606c1f4e6619330c95e5a9e5dbaaa981af"
+                "reference": "c2a07a6d62880c0075f3ce672e44496e28a95292"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/dc9909606c1f4e6619330c95e5a9e5dbaaa981af",
-                "reference": "dc9909606c1f4e6619330c95e5a9e5dbaaa981af",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/c2a07a6d62880c0075f3ce672e44496e28a95292",
+                "reference": "c2a07a6d62880c0075f3ce672e44496e28a95292",
                 "shasum": ""
             },
             "require": {
@@ -896,7 +896,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.8.7"
+                "source": "https://github.com/boundwize/structarmed/tree/0.9.1"
             },
             "funding": [
                 {
@@ -904,7 +904,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-29T11:10:29+00:00"
+            "time": "2026-05-29T15:52:29+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
