@@ -44,7 +44,7 @@
     "require": {
         "php": "~8.4.0 || ~8.5.0 || ~8.6.0",
         "ghostwriter/container": "^7.0.2",
-        "guzzlehttp/guzzle": "^7.10.6",
+        "guzzlehttp/guzzle": "^7.11.0",
         "laminas/laminas-diactoros": "^3.8.0",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1.0",
@@ -52,7 +52,7 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "boundwize/structarmed": "^0.10.0",
+        "boundwize/structarmed": "^0.10.1",
         "ghostwriter/coding-standard": "dev-main",
         "ghostwriter/phpunit-assertions": "^0.1.0",
         "ghostwriter/testify": "^0.1.2",
