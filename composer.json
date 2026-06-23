@@ -44,7 +44,7 @@
     "require": {
         "php": "~8.4.0 || ~8.5.0 || ~8.6.0",
         "ghostwriter/container": "^7.0.2",
-        "guzzlehttp/guzzle": "^7.11.0",
+        "guzzlehttp/guzzle": "^7.12.1",
         "laminas/laminas-diactoros": "^3.8.0",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1.0",
