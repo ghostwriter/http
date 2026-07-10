@@ -46,7 +46,7 @@
         "ghostwriter/config": "^2.1.3",
         "ghostwriter/container": "^7.0.2",
         "ghostwriter/event-dispatcher": "^6.1.3",
-        "ghostwriter/json": "^3.0.2",
+        "ghostwriter/json": "^3.0.3",
         "guzzlehttp/guzzle": "^7.10.4",
         "laminas/laminas-diactoros": "^3.8.0",
         "psr/http-client": "^1.0.3",
