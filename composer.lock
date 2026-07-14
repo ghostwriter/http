@@ -1596,16 +1596,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "e63da1fe3301a2c50a3e5693fa7e0c9756cbac1f"
+                "reference": "774069dcb8f9b6d25918708b1a277ac4d6024b73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/e63da1fe3301a2c50a3e5693fa7e0c9756cbac1f",
-                "reference": "e63da1fe3301a2c50a3e5693fa7e0c9756cbac1f",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/774069dcb8f9b6d25918708b1a277ac4d6024b73",
+                "reference": "774069dcb8f9b6d25918708b1a277ac4d6024b73",
                 "shasum": ""
             },
             "require": {
-                "boundwize/structarmed": "^0.7.6",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -1651,26 +1650,12 @@
                 "ext-zend-opcache": "*",
                 "ext-zip": "*",
                 "ext-zlib": "*",
-                "mockery/mockery": "^1.6.12",
-                "php": "~8.4.0 || ~8.5.0",
-                "phpunit/phpunit": "^13.1.11",
-                "symfony/var-dumper": "^8.0.8"
+                "php": "~8.4.0 || ~8.5.0 || ~8.6.0"
             },
             "conflict": {
                 "pestphp/pest": "*"
             },
             "default-branch": true,
-            "bin": [
-                "tools/phar/composer-normalize",
-                "tools/phar/composer-require-checker",
-                "tools/phar/composer-unused",
-                "tools/phar/infection",
-                "tools/phar/phive",
-                "tools/phar/phpactor",
-                "tools/phar/phpbench",
-                "tools/phar/phpdocumentor",
-                "tools/phar/psalm"
-            ],
             "type": "library",
             "extra": {
                 "thanks": {
@@ -1714,9 +1699,13 @@
                 {
                     "url": "https://github.com/sponsors/ghostwriter",
                     "type": "github"
+                },
+                {
+                    "url": "https://paypal.me/codepoet",
+                    "type": "paypal"
                 }
             ],
-            "time": "2026-05-22T16:43:33+00:00"
+            "time": "2026-07-07T04:07:55+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -3720,178 +3709,6 @@
                 }
             ],
             "time": "2024-10-20T05:08:20+00:00"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
-                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
-                "shasum": ""
-            },
-            "require": {
-                "ext-iconv": "*",
-                "php": ">=7.2"
-            },
-            "provide": {
-                "ext-mbstring": "*"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "thanks": {
-                    "url": "https://github.com/symfony/polyfill",
-                    "name": "symfony/polyfill"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.2"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nicolas-grekas",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-05-27T06:59:30+00:00"
-        },
-        {
-            "name": "symfony/var-dumper",
-            "version": "v8.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "40096a2515a979f3125c5c928603995b8664c62a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/40096a2515a979f3125c5c928603995b8664c62a",
-                "reference": "40096a2515a979f3125c5c928603995b8664c62a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.4.1",
-                "symfony/polyfill-mbstring": "^1.0"
-            },
-            "conflict": {
-                "symfony/console": "<7.4",
-                "symfony/error-handler": "<7.4"
-            },
-            "require-dev": {
-                "symfony/console": "^7.4|^8.0",
-                "symfony/http-kernel": "^7.4|^8.0",
-                "symfony/process": "^7.4|^8.0",
-                "symfony/uid": "^7.4|^8.0",
-                "twig/twig": "^3.12"
-            },
-            "bin": [
-                "Resources/bin/var-dump-server"
-            ],
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "Resources/functions/dump.php"
-                ],
-                "psr-4": {
-                    "Symfony\\Component\\VarDumper\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides mechanisms for walking through any arbitrary PHP variable",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "debug",
-                "dump"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v8.1.1"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nicolas-grekas",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-06-09T10:54:51+00:00"
         },
         {
             "name": "theseer/tokenizer",
